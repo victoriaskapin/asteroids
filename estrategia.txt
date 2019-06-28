@@ -1,0 +1,5 @@
+Hacer una lista con todos los asteroides en pantalla y para dibujar itero por cada uno de sus nodos.
+Si disparo y rompo en dos asteroides, estos dos nuevos se agregan al final de la lista y tienen velocidades y direcciones aleatorias.
+
+ Para disparos, cada vez que apreto la tecla espaciadora agrego al final de la lista el nuevo disparo
+

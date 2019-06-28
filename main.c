@@ -5,8 +5,20 @@
 #include "config.h"
 #include <stdint.h>
 #include "modulo.h"
+#include "iterador.h"
+#include "lista.h"
 
-sprite_t nave;
+
+struct sprite_t nave;
+
+typedef enum
+{
+	FALSE,
+	NAVE_DESTRUIDA,
+	ASTEOROIDE_DESTRUIDO,
+	FALLA_MEMORIA,
+	ASTEOROIDES_DESTRUIDOS
+}status_t;
 
 
 int main() {
@@ -23,18 +35,12 @@ int main() {
 
 	// BEGIN código del alumno
 	// Mi nave:
-
-	
+	nave_t nave;
+	status_t st;
 
 	graficador_inicializar("sprites.bin", 1000, 800);
 
-
-	/*const float (*nave)[2] = nave_grande;
-	size_t nave_tam = sizeof(nave_grande) / sizeof(nave_grande[0]);*/
-
-
-	// Queremos que todo se dibuje escalado por f:
-	float f = 10;
+	float tiempo=0, dt=1.0/JUEGO_FPS;
 	// END código del alumno
 
 	unsigned int ticks = SDL_GetTicks();
@@ -46,10 +52,10 @@ int main() {
 				// BEGIN código del alumno
 				switch(event.key.keysym.sym) {
 					case SDLK_UP:
-						// Agrandamos el dibujo del chorro:
 						break;
+					
 					case SDLK_SPACE:
-						// Achicamos el dibujo del chorro:
+						//creo un disparo y lo agrego a la lista
 
 						break;
 					case SDLK_RIGHT:
@@ -68,21 +74,36 @@ int main() {
 
 
 		// BEGIN código del alumno
-		// Dibujamos la nave escalada por f en el centro de la pantalla:
-printf("antes de grsfivsr\n");
-		//graficador_dibujar(renderer, "nave", 1, 500, 400, 0);
-        	graficador_inicializar(renderer, "sprites.bin", 1000, 800);
+		tiempo+=dt;
+		printf("%d\n", (int)tiempo);
+		//nave_mover(nave, dt);
+		
 
-		/*for(int i = 0; i < nave_tam - 1; i++)
-			SDL_RenderDrawLine(
-				renderer,
-				nave[i][0] * f + VENTANA_ANCHO / 2,
-				-nave[i][1] * f + VENTANA_ALTO / 2,
-				nave[i+1][0] * f + VENTANA_ANCHO / 2,
-				-nave[i+1][1] * f + VENTANA_ALTO / 2
-			);*/
+		//chequeo si el disparo choco con un asteoride y si lo hizo, agrego dos asteorides a la lista y destruyo el disparo y el asteroide original
+		//chequeo si la nave choco con un asteroide
+
+		///////////   POR AHI HACER UN CASE PARA ESTO ////////////
+
+		if((st = asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo))==NAVE_DESTRUIDA)
+			//reiniciar con una vida menos
+
+		else if(st==ASTEOROIDE_DESTRUIDO)
+
+		else if(st==ASTEOROIDES_DESTRUIDOS)
+			//reiniciar con 2 asteroides mas
 
 
+		//////////////////////////////////////////////////////////////////////////
+
+
+		if((disparo_dibujar(disparo, renderer))==false)//dibujo cada elemento de la lista
+			break;
+
+		if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
+			break;
+
+		if((nave_dibujar(nave, renderer))==false)
+			break;
 
 		// END código del alumno
 
