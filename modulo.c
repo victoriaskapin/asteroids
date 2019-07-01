@@ -7,26 +7,32 @@
 #include "modulo.h"
 #include "iterador.h"
 #include "lista.h"
+#include "sprites.h"
 
-lista_t *lista_sprites;
+sprite_t sprite[MAX_SPRITES];// la variable global se declara en el punto h? 
 
-bool graficador_inicializar(const char *fn, int ancho, int alto)//para que sirve ancho y alto???????
-{
-	FILE *f;
-	struct sprite_t sprite;
+bool graficador_inicializar(const char *fn){
+	FILE *fp;
+	int i=0;
+	uint16_t n;
 	
-	f = fopen(fn, "rb");
+	fp=fopen(fn,"rb"); 
+	if (fp==NULL)
+		return false;
+
+	//sprite=malloc(sizeof(sprite_t)*MAX_SPRITES);  esto es por si hay que hacerlo dinamico pero creo que no hace falta
 	
-	lista_sprites = lista_crear();//no hace falta usar listas para las estructuras
+	for(i=0;i<MAX_SPRITES;i++){
+		
+		fread(sprite[i].nombre,sizeof(char),10,fp);//cargo el nombre
+		fread(&sprite[i].n,sizeof(uint16_t),1,fp);//cargo el n
+		
+		n=sprite[i].n; 
 
-	while(feof)//inicializo los modulos uno por uno
-	{
-		fread(&sprite, sizeof(struct sprite_t), 1, f);
-		if((lista_insertar_final(l, sprite))==false) //cargo el ultimo nodo con la estructura
-			return false;
-	}
+		fread(sprite[i].cords,sizeof(float),n*2,fp);//cargo la matriz	
 
-	fclose(f);
+	}	
+	fclose(fp);
 	return true;
 }
 
