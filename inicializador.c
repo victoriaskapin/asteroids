@@ -7,7 +7,7 @@
 typedef struct{
 	char nombre[10];
 	uint16_t n;
-	float cords[][2]; //para poder llenarla me pedia un vector dinamico
+	float cords[][2]; 
 }sprite_t;
 
 #define MAX_SPRITES 7 
@@ -35,6 +35,7 @@ bool graficador_inicializar(const char *fn){
 		fread(sprite[i].cords,sizeof(float),n*2,fp);//cargo la matriz	
 
 	}	
+	fclose(fp);
 	return true;
 }
 
