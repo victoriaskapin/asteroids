@@ -1,15 +1,4 @@
-
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include "config.h"
 #include "modulo.h"
-#include "iterador.h"
-#include "lista.h"
-#include "sprites.h"
-
-sprite_t sprite[MAX_SPRITES];// la variable global se declara en el punto h? 
 
 bool graficador_inicializar(const char *fn){
 	FILE *fp;
@@ -20,8 +9,6 @@ bool graficador_inicializar(const char *fn){
 	if (fp==NULL)
 		return false;
 
-	//sprite=malloc(sizeof(sprite_t)*MAX_SPRITES);  esto es por si hay que hacerlo dinamico pero creo que no hace falta
-	
 	for(i=0;i<MAX_SPRITES;i++){
 		
 		fread(sprite[i].nombre,sizeof(char),10,fp);//cargo el nombre
@@ -36,7 +23,7 @@ bool graficador_inicializar(const char *fn){
 	return true;
 }
 
-
+/*
 //Dibuja el sprite de nombre nombre en el renderer r escalado segun escala, rotado segun
 //angulo en la posicion x, y de la pantalla (tomando como (0; 0) la esquina inferior izquierda).
 bool graficador_dibujar(SDL_Renderer *r, const char *nombre, float escala, float x, float y, float angulo);
@@ -86,3 +73,4 @@ void graficador_finalizar()
 }
 
 
+*/

@@ -19,10 +19,11 @@
 #define NAVE_POTENCIA_INICIAL 0
 #define PUNTAJE_INICIAL 0
 
-#define NAVE_X_INICIAL 2
-#define NAVE_Y_INICIAL (VENTANA_ALTO-100)
-#define NAVE_VX_INICIAL 100
+#define NAVE_X_INICIAL (VENTANA_ANCHO/2)
+#define NAVE_Y_INICIAL (VENTANA_ALTO/2)
+#define NAVE_VX_INICIAL 0
 #define NAVE_VY_INICIAL 0
+#define ESCALA_NAVE 1
 
 #define ACELERACION_INICIAL_X 0
 #define ACELERACION_INICIAL_Y 1
@@ -36,14 +37,6 @@
 #define TERCER_RENGLON 60
 
 #define MSJ_PUNTAJE_ALCANZADO "Puntaje alcanzado: "
-
-
-typedef struct{
-	char nombre[10];
-	uint16_t n;
-	float cords[6][2];
-}sprite_t;
-
 
 
 #endif // _CONFIG_H_
