@@ -6,8 +6,8 @@ nave_t *nave_crear(){
 	if(nave==NULL)
 		return NULL;
 
-	nave->sp_nave=&sprite[0];
-	nave->escala=ESCALA_NAVE;
+	nave->sp_nave=&sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
+	nave->escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
 	nave->px=NAVE_X_INICIAL;
 	nave->py=NAVE_Y_INICIAL;
 	nave->vx=NAVE_VX_INICIAL;
@@ -25,46 +25,6 @@ bool nave_destruir(nave_t*n){
 	else 
 		return false;
 }
-
-
-float ** vector_rotar(float coordenadas[][2], size_t n, float rad){
-	int i;
-	float **rotada;
-	float coseno_angulo,seno_angulo;
-
-	rotada=malloc(sizeof(float)*n);
-	if (rotada==NULL)
-		return NULL;
-
-	coseno_angulo=cos(rad);
-	seno_angulo=sin(rad);
-	for(i=0;i<n;i++){
-
-		rotada[i]=malloc (sizeof(float)*2);
-		
-		if (rotada[i]==NULL){
-			for(int j=0;j<i;j++)
-				free(rotada[j]);
-			free(rotada);
-			return NULL;
-		}
-
-		rotada[i][0] = coordenadas[i][0]*coseno_angulo-coordenadas[i][1]*seno_angulo;
-		rotada[i][1] = coordenadas[i][0]*seno_angulo+coordenadas[i][1]*coseno_angulo;
-	}
-	return rotada;
-}
-
-void destruir_vector(float **v,size_t n){
-
-	for(int i = 0;i < n;i++){
-
-		free (v[i]);
-	}
-
-	free (v);
-}
-
 
 bool nave_dibujar(const nave_t *x, SDL_Renderer *r){
 	return(graficador_dibujar(r,

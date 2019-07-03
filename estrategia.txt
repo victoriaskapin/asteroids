@@ -3,3 +3,48 @@ Si disparo y rompo en dos asteroides, estos dos nuevos se agregan al final de la
 
  Para disparos, cada vez que apreto la tecla espaciadora agrego al final de la lista el nuevo disparo
 
+Nacho: 
+
+(de lo que estaba fui usando un par de cosas y cambie otras. 
+Para no sobreescribir tu laburo lo deje comentado intacto abajo de los archivos que use)
+
+voy usando este archivo de texto para ir comentando lo que voy haciendo asi no tenes que interpretar todo del codigo. 
+
+### programas de MODULO.C y MODULO.H
+
+-inicializar:
+	carga todos los TDAS ya escalados a la pantalla en una estructura global de sprites. 
+
+-ajustar_variables:
+	esta funcion esta media rustica. recibe un puntero a las variables de las coordenadas y lo divide por 10 hasta que sea de una cifra, y en el caso de que sea negativo devuelve el modulo.
+
+	pd: tuve un problema con esta funcion, no se porque me cambia los valores negativos, pero no entra al while que lo divide por 10 y usando el debugger me devolvia cualquier valor. la hice al final de todo y seguro es una boludez que no veo de quemada. 
+
+-graficar: 
+	esta recibe el nombre de lo que hay que graficar, lo compara con la estructura global de sprites y saca los datos de ahi.
+	Dentro llama a la funcion rotar para rotar las coordenadas segun el angulo que le pasamos y graficar esas.  
+	se llama en todas las tdas especificas de los objetos.  
+
+-destruir: 
+	como declare la variable global como estatica no es necesario pedir que se libere memoria.
+	Salta un warning cuando esta estatica pero probe haciendola dinamica y me tira una "double free corruption".
+	La verdad nunca use una variable global dinamica y no se bien como se accede a esa memoria para liberarla o si se libera sola. 
+	 Estatica funciona todo solo que te tira el warning asi que preferi dejarla asi. 
+
+(vector rotar y vector destruir son auxiliares que utiliza graficar).
+
+#### programas de NAVE.C y NAVE.H: 
+
+-nave_crear:
+	crea un tda nave, le pide memoria y lo carga con los valores iniciales definidos por config.h y le asocia su estructura de sprites correspondiente. 
+
+-nave_dibujar:
+	llama a graficador dibujar pasandole los datos, devuelve un bool.
+
+-nave_destruir:
+	libera la memoria pedida por el tda al crearlo. 
+
+
+
+
+
