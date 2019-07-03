@@ -2,7 +2,7 @@
 
 bool graficador_inicializar(const char *fn){
 	FILE *fp;
-	int i=0;
+	int i=0,j;
 	uint16_t n;
 	
 	fp=fopen(fn,"rb"); 
@@ -18,10 +18,71 @@ bool graficador_inicializar(const char *fn){
 
 		fread(sprite[i].cords,sizeof(float),n*2,fp);//cargo la matriz	
 
+		for (j=0;j<n;j++){
+			graficador_ajustar_variables( &(sprite[i].cords[j][0]),&(sprite[i].cords[j][1]));
+		}
 	}	
 	fclose(fp);
 	return true;
 }
+
+void graficador_ajustar_variables(float *x, float *y){
+	if(*x<0){
+		*x = -*x;
+	}
+	if(*y<0){
+		*y = -*y;
+	}
+	
+	while(*x > 10.0){
+		*x = ((*x) * 0.1);
+	}
+	while(*y > 10.0){
+		*y = (*y / 10.0);
+	}
+}
+
+bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float x, float y, float angulo){
+
+	int i=0,j;
+	uint16_t n;
+	float**rotada;
+
+	while(sprite[i].nombre != nombre && i < MAX_SPRITES){
+		i++;
+	}
+
+	if(i == MAX_SPRITES)
+		return false;
+	
+	n=sprite[i].n;
+	rotada= vector_rotar(sprite[i].cords,n,angulo);
+
+	//cargo las coordenadas que quiero graficar rotadas en el angulo correspondiente en una nueva matriz auxiliar para no modificar los datos iniciales. 
+	if(rotada==NULL)
+		return false;
+
+	for(j = 0; j < sprite[i].n -1 ; j++){//grafico la matriz rotada, desplazada en x e y; 
+		//printf("(%f ; %f)\n",rotada[j][0]*escala,rotada[j][1]*escala);
+		SDL_RenderDrawLine(
+			r,
+			rotada[j][0] * escala + x,
+			-rotada[j][1] * escala + y,
+			rotada[j+1][0] * escala + x,
+			-rotada[j+1][1] * escala + y 
+		);
+	}
+	destruir_vector(rotada,n);
+	return true;
+}
+/*void graficador_finalizar() no hace falta porque declare todo estatico 
+{
+	for(int i=0; i<CANT_MODULOS; i++)
+		free(sprite[i]);
+}*/
+
+
+
 
 /*
 //Dibuja el sprite de nombre nombre en el renderer r escalado segun escala, rotado segun

@@ -22,9 +22,8 @@ void destruir_vector(float **v,size_t n);
 
 float ** vector_rotar(float coordenadas[][2], size_t n, float rad);
 
-/*
 void graficador_ajustar_variables(float *x, float *y);
-
+/*
 void graficador_finalizar();*/
 
 #endif
