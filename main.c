@@ -2,24 +2,20 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "config.h"
 #include <stdint.h>
+
+#include "config.h"
 #include "modulo.h"
 #include "iterador.h"
 #include "lista.h"
+#include "nave.h"
+#include "asteroides.h"
 
 
-struct sprite_t nave;
+//sprite_t nave;
 
-typedef enum
-{
-	FALSE,
-	NAVE_DESTRUIDA,
-	ASTEOROIDE_DESTRUIDO,
-	FALLA_MEMORIA,
-	ASTEOROIDES_DESTRUIDOS
-}status_t;
 
+void setear_conficiones_iniciales(nave_t *nave);
 
 int main() {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -29,18 +25,22 @@ int main() {
 	SDL_Event event;
 
 	SDL_CreateWindowAndRenderer(VENTANA_ANCHO, VENTANA_ALTO, 0, &window, &renderer);
-	SDL_SetWindowTitle(window, "Lunar Lander");
+	SDL_SetWindowTitle(window, "Asteroids");
 
 	int dormir = 0;
 
 	// BEGIN código del alumno
-	// Mi nave:
-	nave_t nave;
-	status_t st;
-
-	graficador_inicializar("sprites.bin", 1000, 800);
+	//status_t st;
+	graficador_inicializar("sprites.bin");
 
 	float tiempo=0, dt=1.0/JUEGO_FPS;
+	size_t cant_asteroides = CANT_INICIAL_ASTEROIDES;
+	
+	//setear_conficiones_iniciales(&nave);
+	nave_t nave=nave_crear();
+	crear_asteorides(cant_asteroides);//funcion que se llama cuando hay que crear asteroides de 0
+
+
 	// END código del alumno
 
 	unsigned int ticks = SDL_GetTicks();
@@ -50,16 +50,24 @@ int main() {
 				break;
 	    		if (event.type == SDL_KEYDOWN) {
 				// BEGIN código del alumno
-				switch(event.key.keysym.sym) {
+				switch(event.key.keysym.sym) 
+				{
 					case SDLK_UP:
+						if(1)
+						{
+						nave.potencia = potencia_nave(nave, NAVE_POTENCIA_PASO);//aumento potencia
+						}
+						break;
+
+					case SDLK_SPACE:
+						break;
+
+					case SDLK_RIGHT:
+						(nave.angulo_rotacion) += NAVE_ROTACION_PASO;
 						break;
 					
-					case SDLK_SPACE:
-						//creo un disparo y lo agrego a la lista
-
-						break;
-					case SDLK_RIGHT:
 					case SDLK_LEFT:
+						(nave.angulo_rotacion) -= NAVE_ROTACION_PASO;
 						break;
 				}
 				// END código del alumno
@@ -75,36 +83,42 @@ int main() {
 
 		// BEGIN código del alumno
 		tiempo+=dt;
-		printf("%d\n", (int)tiempo);
-		//nave_mover(nave, dt);
 		
+		nave.potencia=nave.potencia*0.9;
 
-		//chequeo si el disparo choco con un asteoride y si lo hizo, agrego dos asteorides a la lista y destruyo el disparo y el asteroide original
-		//chequeo si la nave choco con un asteroide
+		nave_mover(&nave, dt, nave.potencia);
+		//objeto_mover(&disparo, dt, 0);
+		//objeto_mover(&asteroide, dt, 0);
+
 
 		///////////   POR AHI HACER UN CASE PARA ESTO ////////////
-
-		if((st = asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo))==NAVE_DESTRUIDA)
+		//chequeo si el disparo choco con un asteoride y si lo hizo, agrego dos asteorides a la lista y destruyo el disparo y el asteroide original
+		//chequeo si la nave choco con un asteroide
+		/*if((st = asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo))==NAVE_DESTRUIDA)
+			printf("nave choco\n");
 			//reiniciar con una vida menos
 
 		else if(st==ASTEOROIDE_DESTRUIDO)
+			printf("asteroide destruido\n");
 
 		else if(st==ASTEOROIDES_DESTRUIDOS)
-			//reiniciar con 2 asteroides mas
-
+		{
+			cant_asteroides+=CANT_ASTEROIDES_NUEVA_PARTIDA;
+			crear_asteorides(cant_asteroides);
+		}*/
 
 		//////////////////////////////////////////////////////////////////////////
 
 
-		if((disparo_dibujar(disparo, renderer))==false)//dibujo cada elemento de la lista
-			break;
+		//if((disparo_dibujar(disparo, renderer))==false)//dibujo cada elemento de la lista
+		//	break;
 
-		if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
-			break;
+		//if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
+		//	break;
 
 		if((nave_dibujar(nave, renderer))==false)
 			break;
-
+		
 		// END código del alumno
 
 
@@ -130,3 +144,10 @@ int main() {
 	return 0;
 }
 
+
+/*void setear_conficiones_iniciales(nave_t *nave)
+{
+	printf("condiciones iniciales\n");
+	nave_t nave_aux ={500, 400, 0, 0, NAVE_ANGULO_INICIAL, 0};
+	*nave=nave_aux;
+}*/

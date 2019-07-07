@@ -1,28 +1,38 @@
+
 #include "modulo.h"
+#include <string.h>
+#include "nave.h"
 
 bool graficador_inicializar(const char *fn){
+	
 	FILE *fp;
-	int i=0,j;
-	uint16_t n;
 	
 	fp=fopen(fn,"rb"); 
 	if (fp==NULL)
 		return false;
 
-	for(i=0;i<MAX_SPRITES;i++){
-		
-		fread(sprite[i].nombre,sizeof(char),10,fp);//cargo el nombre
-		fread(&sprite[i].n,sizeof(uint16_t),1,fp);//cargo el n
-		
-		n=sprite[i].n; 
+	for(int k=0;k<MAX_SPRITES;k++){
 
-		fread(sprite[i].cords,sizeof(float),n*2,fp);//cargo la matriz	
+		//sprite = realloc(sprite, sizeof(sprite_t)*(k+1));
+		fread(&(sprite[k].nombre),sizeof(char),10,fp);//cargo el nombre
+		fread(&(sprite[k].n),sizeof(uint16_t),1,fp);//cargo el n
+		
+		printf("nombre:%s n:%u \n",sprite[k].nombre, sprite[k].n);
 
-		for (j=0;j<n;j++){
-			graficador_ajustar_variables( &(sprite[i].cords[j][0]),&(sprite[i].cords[j][1]));
+		sprite[k].cords=malloc(sizeof(float*)*sprite[k].n*2);//pido memoria para la matriz dinamica de 2 columnas
+		
+		for(int j=0;j<(int)sprite[k].n;j++){
+			fread(&sprite[k].cords[j][0],sizeof(float),1,fp);//cargo la matriz
+			fread(&sprite[k].cords[j][1],sizeof(float),1,fp);//cargo la matriz
+			printf("coordenadas (%f ; %f)\n", sprite[k].cords[j][0], sprite[k].cords[j][1]);
+
 		}
+			//graficador_ajustar_variables( &(sprite[i].cords[j][0]),&(sprite[i].cords[j][1]));
+
 	}	
 	fclose(fp);
+	printf("sale de inicializador\n");
+
 	return true;
 }
 
@@ -44,35 +54,31 @@ void graficador_ajustar_variables(float *x, float *y){
 
 bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float x, float y, float angulo){
 
-	int i=0,j;
-	uint16_t n;
-	float**rotada;
+	int i,j;
 
-	while(sprite[i].nombre != nombre && i < MAX_SPRITES){
-		i++;
-	}
-
-	if(i == MAX_SPRITES)
-		return false;
+	for(i=0; i<MAX_SPRITES; i++)
+		if(!strcmp(sprite[i].nombre, nombre))
+			break;
 	
-	n=sprite[i].n;
-	rotada= vector_rotar(sprite[i].cords,n,angulo);
-
 	//cargo las coordenadas que quiero graficar rotadas en el angulo correspondiente en una nueva matriz auxiliar para no modificar los datos iniciales. 
-	if(rotada==NULL)
-		return false;
+	float **objeto;
+	objeto = matriz_a_vector(sprite[i].cords, sprite[i].n);
+	rotar(objeto, sprite[0].n, angulo);	
 
+	printf("x %f\ty %f\n", x, y);
+
+	trasladar(objeto, sprite[0].n, x, y-400);
+	
 	for(j = 0; j < sprite[i].n -1 ; j++){//grafico la matriz rotada, desplazada en x e y; 
-		//printf("(%f ; %f)\n",rotada[j][0]*escala,rotada[j][1]*escala);
 		SDL_RenderDrawLine(
 			r,
-			rotada[j][0] * escala + x,
-			-rotada[j][1] * escala + y,
-			rotada[j+1][0] * escala + x,
-			-rotada[j+1][1] * escala + y 
+			objeto[j][0] * escala + x,
+			-objeto[j][1] * escala + y,
+			objeto[j+1][0] * escala + x,
+			-objeto[j+1][1] * escala + y 
 		);
 	}
-	destruir_vector(rotada,n);
+	
 	return true;
 }
 
@@ -113,7 +119,8 @@ void destruir_vector(float **v,size_t n){
 
 	free (v);
 }
-/*void graficador_finalizar() no hace falta porque declare todo estatico 
+
+/*void graficador_finalizar() //no hace falta porque declare todo estatico 
 {
 	for(int i=0; i<CANT_MODULOS; i++)
 		free(sprite[i]);
@@ -134,10 +141,8 @@ bool graficador_dibujar(SDL_Renderer *r, const char *nombre, float escala, float
 	{
 		if((lista_iterador_siguiente(iterador))==false)//avanzo al siguiente nodo
 			break;
-
 		nodo_modulo = lista_iterador_actual(iterador);
 	}
-
 		for(int i = 0; i < nodo_modulo->dato.n - 1; i++)
 			SDL_RenderDrawLine(
 				renderer,
@@ -146,30 +151,9 @@ bool graficador_dibujar(SDL_Renderer *r, const char *nombre, float escala, float
 				nodo_modulo->dato.cords[i+1][0] * escala + x / 2,//dato.cords[i][0] tiene todas las x se la mtriz
 				-nodo_modulo->dato.cords[i+1][1] * escala + y / 2
 			);
-
-
 	//lista_destruir(l, free());
 	lista_iterador_destruir(iterador);
-
 	return true;
 }
-
-
-//Esta funcion es de asistencia a otros modulos, recibe dos variables x e y y las ajusta dentro
-//del ancho y alto de la pantalla. De esta forma los modulos que trabajan con coordenadas
-//no tienen necesidad de conocer las dimensiones del espacio.
-void graficador_ajustar_variables(float *x, float *y)
-{
-
-}
-
-//Finaliza el modulo. Deben liberarse todos los recursos asociados. Despues de llamar a esta
-//funcion el modulo debe quedar como antes de llamar a graficador_inicializar().
-void graficador_finalizar()
-{
-	for(int i=0; i<CANT_MODULOS; i++)
-		free(sprite[i]);
-}
-
 
 */

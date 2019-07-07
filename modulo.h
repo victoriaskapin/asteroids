@@ -8,7 +8,6 @@
 #include "config.h"
 //#include "iterador.h"
 //#include "lista.h"
-#include "sprites.h"
 
 #define MAX_SPRITES 7 
 

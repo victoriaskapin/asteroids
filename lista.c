@@ -119,7 +119,7 @@ void lista_mapear(lista_t *l, void *(*f)(void *dato))
 	}
 }
 
-lista_t *cargar_lista(struct sprite_t *modulo, lista_t *l)
+lista_t *cargar_lista(sprite_t *modulo, lista_t *l)
 {
 
 	for(int i=0; i<6; i++)

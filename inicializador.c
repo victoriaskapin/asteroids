@@ -4,57 +4,64 @@
 #include <stdbool.h>
 #include <string.h>
 
+//#include "lista.h"
+
 typedef struct{
 	char nombre[10];
 	uint16_t n;
-	float cords[][2]; 
+	float (*cords)[2]; //para poder llenarla me pedia un vector dinamico
 }sprite_t;
 
-#define MAX_SPRITES 7 
 
-sprite_t sprite[MAX_SPRITES];//puntero a estructura de sprites global que lleno en la funcion
+sprite_t sprite[7];//puntero a estructura de sprites global que lleno en la funcion
 
 bool graficador_inicializar(const char *fn){
 	FILE *fp;
-	int i=0;
+	int i=0,j;
 	uint16_t n;
 	
 	fp=fopen(fn,"rb"); 
 	if (fp==NULL)
 		return false;
 
-	//sprite=malloc(sizeof(sprite_t)*MAX_SPRITES);
 	
-	for(i=0;i<MAX_SPRITES;i++){
-		
-		fread(sprite[i].nombre,sizeof(char),10,fp);//cargo el nombre
-		fread(&sprite[i].n,sizeof(uint16_t),1,fp);//cargo el n
-		
-		n=sprite[i].n; 
+	while(!feof(fp) && i<2){
 
-		fread(sprite[i].cords,sizeof(float),n*2,fp);//cargo la matriz	
+		//sprite=realloc(sprite,sizeof(sprite_t)*(i+1));//pido memoria para el vector de estructuras
+		
+		fread(&(sprite[i].nombre),sizeof(char),10,fp);//cargo el nombre
+		fread(&(sprite[i].n),sizeof(uint16_t),1,fp);//cargo el n
+		
+		printf("nombre:%s n:%u \n",sprite[i].nombre,sprite[i].n);
 
-	}	
-	fclose(fp);
+		n=(int)sprite[i].n; 
+
+		sprite[i].cords=malloc(n*sizeof(float*));//pido memoria para la matriz dinamica de 2 columnas
+		
+
+		for(j=0;j<n;j++)
+		{
+			fread(&(sprite[i].cords[j]),sizeof(float),2,fp);//cargo la matriz
+		}
+		
+
+		for(j=0;j<n;j++)
+			printf("coordenadas (%f ; %f)\n",sprite[i].cords[j][0],sprite[i].cords[j][1] );
+
+		i++;
+	}
+	
 	return true;
 }
 
-
 int main (void){ //main que arme para probar si funcionaba 
-	int c;
+
 	if (graficador_inicializar("sprites.bin"))
 		puts("se cargo la estructura");
 	else
 		puts("no se cargo la estructura");
+	
 
-	for(c=0;c<MAX_SPRITES;c++){
-		printf("\n");
-		
-		printf("nombre:%s n:%u \n",sprite[c].nombre,sprite[c].n);
-
-		for(int i=0;i<sprite[c].n;i++)
-			printf("coordenadas (%f ; %f)\n",sprite[c].cords[i][0],sprite[c].cords[i][1] );
-	}
 
 	return 0;
 }

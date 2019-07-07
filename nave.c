@@ -1,66 +1,38 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <SDL2/SDL.h>
+#include <math.h>
+
+#include "config.h"
+#include "modulo.h"
+#include "iterador.h"
 #include "nave.h"
 
-nave_t *nave_crear(){
-	nave_t *nave;
-	nave=malloc(sizeof(nave_t));
-	if(nave==NULL)
-		return NULL;
 
-	nave->sp_nave=&sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
-	nave->escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
-	nave->px=NAVE_X_INICIAL;
-	nave->py=NAVE_Y_INICIAL;
-	nave->vx=NAVE_VX_INICIAL;
-	nave->vy=NAVE_VY_INICIAL;
-
-	return nave;
-
-}
-
-bool nave_destruir(nave_t*n){
-	if(n!=NULL){
-		free(n);
-		return true;
-	}
-	else 
-		return false;
-}
-
-bool nave_dibujar(const nave_t *x, SDL_Renderer *r){
-	return(graficador_dibujar(r,
-		x->sp_nave->nombre,
-		x->escala,
-		x->px,
-		x->py,
-		x->angulo));
-}
-
-
-/*int main (void){
-	nave_t *n;
-
-	if(graficador_inicializar("sprites.bin"))
-		puts("se cargo la estructura");
-
-	n=nave_crear();
-	if(n==NULL)
-		puts("no cargo la nave");
-	printf("%f\n",n->px);
-
-	return 0;
-}*/
-
-
-/*void nave_mover(nave_t *nave, float dt);
+void nave_mover(nave_t *nave, float dt, size_t potencia)
 {	
-	float aceleracion_x = nave->potencia*sin(-nave->angulo_rotacion);
-	float aceleracion_y = nave->potencia*cos(-nave->angulo_rotacion);
+
+
+	nave->velocidad_x*=0.99;
+	nave->velocidad_y*=0.99;
+
+	float aceleracion_x = potencia*sin(nave->angulo_rotacion);
+	float aceleracion_y = potencia*cos(nave->angulo_rotacion);
 	
+
+	printf("angulo nave %f\n", nave->angulo_rotacion);
+	printf("ax %f\tay %f\n", aceleracion_x, aceleracion_y);
+
+
+
 	nave->velocidad_x = computar_velocidad(nave->velocidad_x, aceleracion_x, dt);
 	nave->velocidad_y = computar_velocidad(nave->velocidad_y, aceleracion_y, dt);
 
+	printf("vx %f\tvy %f\n", nave->velocidad_x, nave->velocidad_y);
 	nave->posicion_x = computar_posicion(nave->posicion_x, nave->velocidad_x, dt);
 	nave->posicion_y = computar_posicion(nave->posicion_y, nave->velocidad_y, dt);
+
 
 	if(nave->posicion_x<1)
 		nave->posicion_x=VENTANA_ANCHO;
@@ -68,40 +40,23 @@ bool nave_dibujar(const nave_t *x, SDL_Renderer *r){
     if(nave->posicion_x>VENTANA_ANCHO)
 		nave->posicion_x=1;
 
-	lista_mapear(l, rotar(nave, nave->angulo_rotacion)void *(*f)(void *dato));//ESTO FALTA PULIRLO
 
-}*/
-/*
+	//lista_mapear(l, rotar(nave, nave->angulo_rotacion)/*void *(*f)(void *dato)*/);//ESTO FALTA PULIRLO
 
-bool nave_dibujar(const nave_t *x, SDL_Renderer *r);
+}
+
+
+bool nave_dibujar(nave_t x, SDL_Renderer *r)
 {
-
-	if((graficador_dibujar(r, modulos[0]"SHIP", 1, x->posicion_x, x->posicion_y, x->angulo_rotacion))==false)//las posiciones tienen que ser con el 0,0 abajo a la izq
+	const char a[5]={"SHIP"};
+	if((graficador_dibujar(r, a, 1, x.posicion_x, x.posicion_y, x.angulo_rotacion))==false)//las posiciones tienen que ser con el 0,0 abajo a la izq
 		return false;
 		
 	return true;
 }
 
-size_t combustible_chorro(nave_t nave, size_t paso_potencia)
-{	
-	if(nave.cantidad_combustible>0)
-	{
-		nave.cantidad_combustible-=paso_potencia;
-		return nave.cantidad_combustible;
-	}
 
-	return 0;
-}
 
-int potencia_nave(nave_t nave, size_t paso_potencia)
-{
-	int potencia_temp = nave.potencia + paso_potencia;
-
-	if((potencia_temp>NAVE_MAX_POTENCIA || potencia_temp<0))
-		return nave.potencia; //si cruza los limites, devuelvo la original
-
-	return potencia_temp;
-}
 
 void rotar(float **coordenadas, int n, double rad)
 {
@@ -120,7 +75,7 @@ void rotar(float **coordenadas, int n, double rad)
 		
 	}
 
-}*/
+}
 
 /*void computar_parametros(struct nave_t nave, float paso_tiempo)
 {
@@ -153,3 +108,105 @@ void rotar(float **coordenadas, int n, double rad)
 }*/
 
 
+
+
+double computar_velocidad(double vi, double aceleracion, double dt)
+{
+	return dt*aceleracion+vi;
+}
+
+double computar_posicion(double pi, double vi, double dt)
+{
+	return dt*vi+pi;
+}
+
+size_t potencia_nave(nave_t nave, size_t paso_potencia)
+{
+	int potencia_temp=0;
+
+	if((potencia_temp = nave.potencia + paso_potencia)>1000)//la potencia nunca sera mas de 1000
+		return paso_potencia;
+
+	return potencia_temp;
+}
+
+float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n)
+{
+	size_t i, j;
+	float **vector;
+
+	vector = crear_vector(n, MAX_COORDENADAS);
+
+	for(i=0; i<n; i++)
+		for(j=0; j<MAX_COORDENADAS; j++)
+			vector[i][j] = m[i][j];
+
+	return vector;
+}
+
+void trasladar(float **coordenadas, int n, float dx, float dy)
+{
+	for(int i=0; i<n; i++)
+	{
+		coordenadas[i][0] += dx;
+		coordenadas[i][1] += dy;
+	}
+
+}
+
+float **crear_vector(size_t filas, size_t columnas)
+{
+    float **vector;
+    size_t i;
+
+	if((vector = malloc(filas*sizeof(float*)))==NULL)
+		return NULL;
+	for(i=0; i<filas; i++)
+	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) /*pido memoria para todas las columnas*/
+		{
+			destruir_vector_float(vector, filas);
+	    	return NULL;
+		}
+
+	return vector;
+}
+
+void destruir_vector_float(float **vector, size_t n)
+{
+	size_t i;
+
+	for(i=0;i<n;i++)
+		free(vector[i]);/*libero cada elemento de las filas*/
+	
+	free(vector);/*libero lo mas "externo" del puntero*/
+}
+
+bool nave_destruir(nave_t*n)
+{
+	if(n!=NULL){
+		free(n);
+		return true;
+	}
+	else 
+		return false;
+}
+
+
+nave_t nave_crear()
+{
+	nave_t nave;
+	/*nave=malloc(sizeof(nave_t));
+	if(nave==NULL)
+		return NULL;*/
+
+	nave.sp_nave=&sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
+	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
+	nave.posicion_x=NAVE_X_INICIAL;
+	nave.posicion_y=NAVE_Y_INICIAL;
+	nave.velocidad_x=NAVE_VX_INICIAL;
+	nave.velocidad_y=NAVE_VY_INICIAL;
+	nave.angulo_rotacion = NAVE_ANGULO_INICIAL;
+	nave.potencia=0;
+
+	return nave;
+}
