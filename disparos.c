@@ -69,9 +69,9 @@ bool eliminar_disparos(lista_t *l_shot){
 	while(lista_iterador_siguiente(li)){
 		struct nodo* disparo =lista_iterador_actual(li);
 		if (asteroide_choco(disparo->dato)==2)
-			iterador_eliminar_actual(li);
+			iterador_eliminar(li);
 		if(disparo->dato->tiempo_vida<=0)
-			iterador_eliminar_actual(li);
+			iterador_eliminar(li);
 	}
 	lista_iterador_eliminar(li);
 }
