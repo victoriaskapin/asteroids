@@ -61,14 +61,17 @@ bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float 
 			break;
 	}
 	
+	printf("%s\n",sprite[i].nombre);
 	//cargo las coordenadas que quiero graficar rotadas en el angulo correspondiente en una nueva matriz auxiliar para no modificar los datos iniciales. 
 	float **objeto;
 	objeto = matriz_a_vector(sprite[i].cords, sprite[i].n);
-	rotar(objeto, sprite[0].n, angulo);	
+	rotar(objeto, sprite[i].n, angulo);	
 
 	//printf("x %f\ty %f\n", x, y);
 
-	trasladar(objeto, sprite[0].n, x, y-400);
+	trasladar(objeto, sprite[i].n, x, y-400);
+
+	printf("n: %u\n",sprite[i].n);
 	
 	for(j = 0; j < sprite[i].n -1 ; j++){//grafico la matriz rotada, desplazada en x e y; 
 		SDL_RenderDrawLine(

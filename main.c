@@ -63,7 +63,7 @@ int main() {
 						break;
 
 					case SDLK_SPACE:
-						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,nave.angulo_rotacion));
+						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,NAVE_ANGULO_INICIAL- nave.angulo_rotacion));
 						break;
 
 					case SDLK_RIGHT:
@@ -91,7 +91,7 @@ int main() {
 		nave.potencia=nave.potencia*0.9;
 
 		nave_mover(&nave, dt, nave.potencia);
-		//mover_lista_disparos(l_shot,dt);
+		mover_lista_disparos(l_shot,dt);
 		//objeto_mover(&disparo, dt, 0);
 		//objeto_mover(&asteroide, dt, 0);
 
@@ -120,8 +120,8 @@ int main() {
 
 		//if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
 		//	break;
-		//if(dibujar_lista_disparos(l_shot,renderer)==false)
-			//break;
+		if(dibujar_lista_disparos(l_shot,renderer))
+			;
 		if((nave_dibujar(nave, renderer))==false)
 			break;
 		
