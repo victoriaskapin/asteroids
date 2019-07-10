@@ -16,14 +16,17 @@ nave.o: nave.c iterador.c modulo.c nave.h iterador.h modulo.h config.h
 asteroides.o: asteroides.c iterador.c modulo.c asteroides.h iterador.h modulo.h config.h lista.h nave.h
 	$(CC) $(CFLAGS) -o asteroides.o -c asteroides.c
 
+disparos.o: disparos.c 
+	$(CC) $(CFLAGS) -o disparos.o -c disparos.c -lm
+
 iterador.o: iterador.c lista.c lista.h iterador.h
 	$(CC) $(CFLAGS) -o iterador.o -c iterador.c
 
 main.o: main.c iterador.c modulo.c nave.c lista.c asteroides.c asteroides.h lista.h modulo.h iterador.h nave.h config.h lista.c lista.h
 	$(CC) $(CFLAGS) -o main.o -c main.c
 
-tp2: lista.o modulo.o nave.o iterador.o main.o asteroides.o
-	$(CC) $(CFLAGS) -o tp2 lista.o modulo.o nave.o iterador.o main.o asteroides.o -lm -lSDL2
+tp2: lista.o modulo.o nave.o iterador.o main.o asteroides.o disparos.o
+	$(CC) $(CFLAGS) -o tp2 lista.o modulo.o disparos.o nave.o iterador.o main.o asteroides.o -lm -lSDL2
 	
 clean:
 	rm *.o

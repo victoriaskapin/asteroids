@@ -21,15 +21,15 @@ void nave_mover(nave_t *nave, float dt, size_t potencia)
 	float aceleracion_y = potencia*cos(nave->angulo_rotacion);
 	
 
-	printf("angulo nave %f\n", nave->angulo_rotacion);
-	printf("ax %f\tay %f\n", aceleracion_x, aceleracion_y);
+	//printf("angulo nave %f\n", nave->angulo_rotacion);
+	//printf("ax %f\tay %f\n", aceleracion_x, aceleracion_y);
 
 
 
 	nave->velocidad_x = computar_velocidad(nave->velocidad_x, aceleracion_x, dt);
 	nave->velocidad_y = computar_velocidad(nave->velocidad_y, aceleracion_y, dt);
 
-	printf("vx %f\tvy %f\n", nave->velocidad_x, nave->velocidad_y);
+	//printf("vx %f\tvy %f\n", nave->velocidad_x, nave->velocidad_y);
 	nave->posicion_x = computar_posicion(nave->posicion_x, nave->velocidad_x, dt);
 	nave->posicion_y = computar_posicion(nave->posicion_y, nave->velocidad_y, dt);
 

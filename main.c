@@ -10,6 +10,7 @@
 #include "lista.h"
 #include "nave.h"
 #include "asteroides.h"
+#include "disparos.h"
 
 
 //sprite_t nave;
@@ -19,7 +20,7 @@ void setear_conficiones_iniciales(nave_t *nave);
 
 int main() {
 	SDL_Init(SDL_INIT_VIDEO);
-
+	int i=0;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_Event event;
@@ -39,6 +40,8 @@ int main() {
 	//setear_conficiones_iniciales(&nave);
 	nave_t nave=nave_crear();
 	crear_asteorides(cant_asteroides);//funcion que se llama cuando hay que crear asteroides de 0
+
+	lista_t *l_shot=lista_crear();
 
 
 	// END código del alumno
@@ -60,6 +63,7 @@ int main() {
 						break;
 
 					case SDLK_SPACE:
+						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,nave.angulo_rotacion));
 						break;
 
 					case SDLK_RIGHT:
@@ -87,6 +91,7 @@ int main() {
 		nave.potencia=nave.potencia*0.9;
 
 		nave_mover(&nave, dt, nave.potencia);
+		mover_lista_disparos(l_shot,dt);
 		//objeto_mover(&disparo, dt, 0);
 		//objeto_mover(&asteroide, dt, 0);
 
@@ -115,7 +120,8 @@ int main() {
 
 		//if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
 		//	break;
-
+		if(dibujar_lista_disparos(l_shot,renderer)==false)
+			break;
 		if((nave_dibujar(nave, renderer))==false)
 			break;
 		

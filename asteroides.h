@@ -8,6 +8,7 @@
 #include "lista.h"
 #include "nave.h"
 #include "iterador.h"
+#include "disparos.h"
 
 #define ASTEROIDE_RADIO_CHICO 8
 #define ASTEROIDE_RADIO_MEDIANO 16
@@ -26,20 +27,11 @@ typedef struct
 	size_t radio;
 }asteroide_t;
 
-typedef struct
-{
-	float posicion_x;
-	float posicion_y;
-	float angulo_rotacion;
-	float tiempo_vida;
-}disparo_t;
-
 
 asteroide_t asteroide;
 disparo_t disparo;
 lista_t *lista_asteroides;
 lista_t *lista_disparos;
-
 
 status_t asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo);
 float distancia(void *asteroide, float objeto_x, float objeto_y);
@@ -48,7 +40,6 @@ float generar_aleatorio(float superior, float inferior);
 size_t procesar_asteroide(lista_iterador_t * iterador);
 void crear_asteorides(size_t cantidad);
 bool asteroide_dibujar(asteroide_t x, SDL_Renderer *r);
-bool disparo_dibujar(disparo_t x, SDL_Renderer *r);
 
 
 #endif

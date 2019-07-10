@@ -157,12 +157,4 @@ bool asteroide_dibujar(asteroide_t x, SDL_Renderer *r)
 	return true;
 }
 
-bool disparo_dibujar(disparo_t x, SDL_Renderer *r)
-{
-	const char a[5]={"SHOT"};
-	if((graficador_dibujar(r, a, 1, x.posicion_x, x.posicion_y, x.angulo_rotacion))==false)//las posiciones tienen que ser con el 0,0 abajo a la izq
-		return false;
-		
-	return true;
-}
 //void procesar_choque()
