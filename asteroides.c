@@ -1,9 +1,4 @@
-
-#include <stdio.h>
 #include "asteroides.h"
-#include "modulo.h"
-
-
 
 status_t asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo)
 {

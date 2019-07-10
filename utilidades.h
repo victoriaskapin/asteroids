@@ -10,8 +10,10 @@
 
 #include "config.h"
 #include "modulo.h"
-#include "iterador.h"
+
 #include "lista.h"
+#include "iterador.h"
+
 #include "nave.h"
 #include "asteroides.h"
 #include "disparos.h"

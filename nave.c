@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include <math.h>
-
-#include "config.h"
-#include "modulo.h"
-#include "iterador.h"
 #include "nave.h"
-#include "utilidades.h"
-
 
 void nave_mover(nave_t *nave, float dt, size_t potencia)
 {	

@@ -1,16 +1,7 @@
 #ifndef _DISPAROS_H_
 #define _DISPAROS_H_
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include "modulo.h"
-#include "config.h"
-#include "lista.h"
-#include "iterador.h"
-
+#include "utilidades.h"
 
 typedef struct
 {

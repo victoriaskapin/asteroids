@@ -1,15 +1,7 @@
-
 #ifndef _ASTEROIDES_H_
 #define _ASTEROIDES_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-#include "config.h"
 #include "utilidades.h"
-#include "lista.h"
-#include "nave.h"
-#include "iterador.h"
-#include "disparos.h"
 
 #define ASTEROIDE_RADIO_CHICO 8
 #define ASTEROIDE_RADIO_MEDIANO 16

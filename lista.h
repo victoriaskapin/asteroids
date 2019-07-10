@@ -1,9 +1,8 @@
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-#include "config.h"
+#include "utilidades.h"
+
 struct nodo{
 	struct nodo *sig;
 	void *dato;

@@ -1,7 +1,5 @@
-
 #include "modulo.h"
 #include <string.h>
-#include "nave.h"
 
 bool graficador_inicializar(const char *fn){
 	

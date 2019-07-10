@@ -1,7 +1,4 @@
 #include "lista.h"
-#include <stdlib.h>
-
-
 
 struct nodo *nodo_crear(void *d) 
 {

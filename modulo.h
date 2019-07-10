@@ -1,14 +1,8 @@
 #ifndef _MODULO_H_
 #define _MODULO_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include "config.h"
 #include "utilidades.h"
-//#include "iterador.h"
-//#include "lista.h"
+
 
 #define MAX_SPRITES 7 
 

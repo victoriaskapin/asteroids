@@ -3,7 +3,6 @@
 
 #include "lista.h"
 
-
 typedef struct
 {
 	struct nodo *nodo_iterador;

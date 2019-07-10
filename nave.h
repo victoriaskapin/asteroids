@@ -1,10 +1,7 @@
 #ifndef _NAVE_H_
 #define _NAVE_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <SDL2/SDL.h>
-
+#include "utilidades.h"
 
 typedef struct
 {

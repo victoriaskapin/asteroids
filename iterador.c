@@ -1,8 +1,5 @@
 #include "iterador.h"
-#include "lista.h"
 #include <stdlib.h>
-
-
 
 lista_iterador_t *lista_iterador_crear(lista_t *l)
 {

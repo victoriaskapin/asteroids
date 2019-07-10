@@ -1,21 +1,4 @@
-#include <SDL2/SDL.h>
-#include <time.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "config.h"
-#include "modulo.h"
-#include "iterador.h"
-#include "lista.h"
-#include "nave.h"
-#include "asteroides.h"
-#include "disparos.h"
 #include "utilidades.h"
-
-
-//sprite_t nave;
-
 
 void setear_conficiones_iniciales(nave_t *nave);
 
