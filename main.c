@@ -4,7 +4,6 @@
 #include "disparos.h"
 #include "asteroides.h"
 
-
 //void setear_conficiones_iniciales(nave_t *nave);
 
 int main() {
@@ -30,7 +29,7 @@ int main() {
 	nave_t nave=nave_crear();
 	crear_asteorides(cant_asteroides);//funcion que se llama cuando hay que crear asteroides de 0
 
-	lista_t *l_shot=lista_crear();
+	lista_t *l_shot=lista_crear();//creo la lista a llenar de disparos
 
 
 	// END código del alumno
@@ -52,7 +51,7 @@ int main() {
 						break;
 
 					case SDLK_SPACE:
-						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,NAVE_ANGULO_INICIAL- nave.angulo_rotacion));
+						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,-NAVE_ANGULO_INICIAL + nave.angulo_rotacion));
 						break;
 
 					case SDLK_RIGHT:

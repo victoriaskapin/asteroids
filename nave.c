@@ -87,10 +87,6 @@ double computar_velocidad(double vi, double aceleracion, double dt)
 	return dt*aceleracion+vi;
 }
 
-double computar_posicion(double pi, double vi, double dt)
-{
-	return dt*vi+pi;
-}
 
 size_t potencia_nave(nave_t nave, size_t paso_potencia)
 {

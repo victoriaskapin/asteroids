@@ -8,7 +8,7 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 
 	shot->sp_disparo=sprite[6];
 	shot->posicion_x=px;
-	shot->posicion_y=py;
+	shot->posicion_y=-py;
 	shot->angulo=angulo;
 	shot->velocidad=VELOCIDAD_DISPARO;
 	shot->tiempo_vida= TIEMPO_VIDA_SHOT;
@@ -36,9 +36,11 @@ bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
 
 void disparo_mover(disparo_t *shot, float dt){
 	shot->tiempo_vida-=1.0;
-	if (shot->tiempo_vida>0)
-	trasladar_shot(shot->sp_disparo.cords,
-		shot->sp_disparo.n,1.0,1.0);
+	if (shot->tiempo_vida>0){
+		shot->posicion_x=computar_posicion(shot->posicion_x,shot->velocidad,dt);
+		shot->posicion_y=computar_posicion(shot->posicion_y,shot->velocidad,dt);
+		//trasladar_shot(shot->sp_disparo.cords,shot->sp_disparo.n,px,py);
+	}
 }
 
 void trasladar_shot(float (*coordenadas)[2], int n, float dx, float dy){

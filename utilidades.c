@@ -79,6 +79,12 @@ float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n)
 	return vector;
 }
 
+
+double computar_posicion(double pi, double vi, double dt)
+{
+	return dt*vi+pi;
+}
+
 //esta es igual a la de rotar anterior solo que devuelve void, la puse aca para no borrarla pero la estamos usando ??? 
 void rotar(float **coordenadas, int n, double rad)
 {

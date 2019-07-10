@@ -25,4 +25,6 @@ float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n);
 
 void rotar(float **coordenadas, int n, double rad);
 
+double computar_posicion(double pi, double vi, double dt);
+
 #endif

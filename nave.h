@@ -25,7 +25,6 @@ void setear_conficiones_iniciales(nave_t *nave);
 size_t combustible_chorro(nave_t nave, size_t paso_potencia);
 size_t potencia_nave(nave_t nave, size_t paso_potencia);
 double computar_velocidad(double vi, double aceleracion, double dt);
-double computar_posicion(double pi, double vi, double dt);
 void trasladar(float **coordenadas, int n, float dx, float dy);
 
 
