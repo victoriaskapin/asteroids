@@ -11,6 +11,7 @@
 #include "nave.h"
 #include "asteroides.h"
 #include "disparos.h"
+#include "utilidades.h"
 
 
 //sprite_t nave;

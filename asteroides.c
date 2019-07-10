@@ -79,14 +79,6 @@ asteroide_t *cargar_asteroide(size_t radio, float x, float y)
 
 }
 
-float generar_aleatorio(float superior, float inferior)
-{
-	float numero_aleatorio=(rand()%RAND_MAX); /*da un numero entre 1 y RAND_MAX*/
-	float random = (numero_aleatorio/RAND_MAX);//lo escalo para que de entre 0 y 1
-
-	return random*(superior - inferior) + inferior;/*x entre x_max y x_min*/
-}
-
 size_t procesar_asteroide(lista_iterador_t * iterador)
 {
 	struct nodo *nodo = lista_iterador_actual(iterador);	

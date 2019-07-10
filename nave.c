@@ -8,6 +8,7 @@
 #include "modulo.h"
 #include "iterador.h"
 #include "nave.h"
+#include "utilidades.h"
 
 
 void nave_mover(nave_t *nave, float dt, size_t potencia)
@@ -45,7 +46,6 @@ void nave_mover(nave_t *nave, float dt, size_t potencia)
 
 }
 
-
 bool nave_dibujar(nave_t x, SDL_Renderer *r)
 {
 	const char a[5]={"SHIP"};
@@ -53,28 +53,6 @@ bool nave_dibujar(nave_t x, SDL_Renderer *r)
 		return false;
 		
 	return true;
-}
-
-
-
-
-void rotar(float **coordenadas, int n, double rad)
-{
-	int i;
-    float coseno_rad = cos(rad);
-    float seno_rad = sin(rad);
-    float x_rotada, y_rotada;
-    
-	for(i=0; i<n; i++)
-	{
-		x_rotada = (coordenadas[i][0])*coseno_rad - (coordenadas[i][1])*seno_rad;
-		y_rotada = (coordenadas[i][0])*seno_rad + (coordenadas[i][1])*coseno_rad;
-		
-		coordenadas[i][0] = x_rotada;
-		coordenadas[i][1] = y_rotada;
-		
-	}
-
 }
 
 /*void computar_parametros(struct nave_t nave, float paso_tiempo)
@@ -107,9 +85,6 @@ void rotar(float **coordenadas, int n, double rad)
 
 }*/
 
-
-
-
 double computar_velocidad(double vi, double aceleracion, double dt)
 {
 	return dt*aceleracion+vi;
@@ -130,19 +105,6 @@ size_t potencia_nave(nave_t nave, size_t paso_potencia)
 	return potencia_temp;
 }
 
-float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n)
-{
-	size_t i, j;
-	float **vector;
-
-	vector = crear_vector(n, MAX_COORDENADAS);
-
-	for(i=0; i<n; i++)
-		for(j=0; j<MAX_COORDENADAS; j++)
-			vector[i][j] = m[i][j];
-
-	return vector;
-}
 
 void trasladar(float **coordenadas, int n, float dx, float dy)
 {
@@ -152,33 +114,6 @@ void trasladar(float **coordenadas, int n, float dx, float dy)
 		coordenadas[i][1] += dy;
 	}
 
-}
-
-float **crear_vector(size_t filas, size_t columnas)
-{
-    float **vector;
-    size_t i;
-
-	if((vector = malloc(filas*sizeof(float*)))==NULL)
-		return NULL;
-	for(i=0; i<filas; i++)
-	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) /*pido memoria para todas las columnas*/
-		{
-			destruir_vector_float(vector, filas);
-	    	return NULL;
-		}
-
-	return vector;
-}
-
-void destruir_vector_float(float **vector, size_t n)
-{
-	size_t i;
-
-	for(i=0;i<n;i++)
-		free(vector[i]);/*libero cada elemento de las filas*/
-	
-	free(vector);/*libero lo mas "externo" del puntero*/
 }
 
 bool nave_destruir(nave_t*n)

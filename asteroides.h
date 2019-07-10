@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "config.h"
+#include "utilidades.h"
 #include "lista.h"
 #include "nave.h"
 #include "iterador.h"
@@ -36,7 +37,6 @@ lista_t *lista_disparos;
 status_t asteroide_choco(nave_t nave, asteroide_t asteroide, disparo_t disparo);
 float distancia(void *asteroide, float objeto_x, float objeto_y);
 asteroide_t *cargar_asteroide(size_t radio, float x, float y);
-float generar_aleatorio(float superior, float inferior);
 size_t procesar_asteroide(lista_iterador_t * iterador);
 void crear_asteorides(size_t cantidad);
 bool asteroide_dibujar(asteroide_t x, SDL_Renderer *r);
