@@ -1,7 +1,9 @@
 #ifndef _ITERADOR_H_
 #define _ITERADOR_H_
 
+#include "utilidades.h"
 #include "lista.h"
+
 
 typedef struct
 {

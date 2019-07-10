@@ -1,7 +1,7 @@
 #ifndef _LISTA_H_
 #define _LISTA_H_
 
-#include "utilidades.h"
+
 
 struct nodo{
 	struct nodo *sig;
@@ -12,6 +12,8 @@ typedef struct {
 	struct nodo *prim;
 	// struct nodo *ult;
 }lista_t;
+
+#include "utilidades.h"
 
 //struct lista;
 //typedef struct lista lista_t;

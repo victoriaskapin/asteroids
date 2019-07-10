@@ -10,18 +10,12 @@
 
 #include "config.h"
 #include "modulo.h"
-
 #include "lista.h"
 #include "iterador.h"
 
-#include "nave.h"
-#include "asteroides.h"
-#include "disparos.h"
-
-
 float generar_aleatorio(float superior, float inferior);
 
-void setear_conficiones_iniciales(nave_t *nave);
+float **crear_vector(size_t filas, size_t columnas);
 
 void destruir_vector(float **v,size_t n);
 

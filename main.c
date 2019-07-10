@@ -1,10 +1,15 @@
 #include "utilidades.h"
+#include "modulo.h"
+#include "nave.h"
+#include "disparos.h"
+#include "asteroides.h"
 
-void setear_conficiones_iniciales(nave_t *nave);
+
+//void setear_conficiones_iniciales(nave_t *nave);
 
 int main() {
 	SDL_Init(SDL_INIT_VIDEO);
-	int i=0;
+	
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_Event event;

@@ -15,10 +15,12 @@ typedef struct
 	size_t potencia;
 }nave_t;
 
+
 nave_t nave_crear();
 void nave_mover(nave_t *nave, float dt, size_t potencia);
 bool nave_dibujar(nave_t x, SDL_Renderer *r);//LA ESTRUCTURA TIENE QUE SER CONST
 bool nave_destruir(nave_t*n);
+void setear_conficiones_iniciales(nave_t *nave);
 
 size_t combustible_chorro(nave_t nave, size_t paso_potencia);
 size_t potencia_nave(nave_t nave, size_t paso_potencia);

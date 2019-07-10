@@ -1,13 +1,6 @@
 #include "utilidades.h"
 
 
-void setear_conficiones_iniciales(nave_t *nave)
-{
-
-	nave_t nave_aux ={500, 400, 0, 0, 0, 0};
-	*nave=nave_aux;
-}
-
 float generar_aleatorio(float superior, float inferior)
 {
 	float numero_aleatorio=(rand()%RAND_MAX); /*da un numero entre 1 y RAND_MAX*/
@@ -16,6 +9,22 @@ float generar_aleatorio(float superior, float inferior)
 	return random*(superior - inferior) + inferior;/*x entre x_max y x_min*/
 }
 
+float **crear_vector(size_t filas, size_t columnas)
+{
+    float **vector;
+    size_t i;
+
+	if((vector = malloc(filas*sizeof(float*)))==NULL)
+		return NULL;
+	for(i=0; i<filas; i++)
+	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) /*pido memoria para todas las columnas*/
+		{
+			destruir_vector(vector, filas);
+	    	return NULL;
+		}
+
+	return vector;
+}
 
 float ** vector_rotar(float coordenadas[][2], size_t n, float rad){
 	int i;
@@ -70,22 +79,6 @@ float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n)
 	return vector;
 }
 
-float **crear_vector(size_t filas, size_t columnas)
-{
-    float **vector;
-    size_t i;
-
-	if((vector = malloc(filas*sizeof(float*)))==NULL)
-		return NULL;
-	for(i=0; i<filas; i++)
-	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) /*pido memoria para todas las columnas*/
-		{
-			destruir_vector_float(vector, filas);
-	    	return NULL;
-		}
-
-	return vector;
-}
 //esta es igual a la de rotar anterior solo que devuelve void, la puse aca para no borrarla pero la estamos usando ??? 
 void rotar(float **coordenadas, int n, double rad)
 {

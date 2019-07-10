@@ -2,6 +2,7 @@
 #define _MODULO_H_
 
 #include "utilidades.h"
+#include "nave.h"
 
 
 #define MAX_SPRITES 7 

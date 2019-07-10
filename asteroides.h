@@ -1,14 +1,16 @@
 #ifndef _ASTEROIDES_H_
 #define _ASTEROIDES_H_
 
-#include "utilidades.h"
-
 #define ASTEROIDE_RADIO_CHICO 8
 #define ASTEROIDE_RADIO_MEDIANO 16
 #define ASTEROIDE_RADIO_GRANDE 32
 #define ASTEROIDES_DESTRUIDOS 0
 #define VELOCIDAD_ASTEROIDE_ORIGINAL 1000
 #define VELOCIDAD_ASTEROIDE_OFFSET 100
+
+#include "nave.h"
+#include "disparos.h"
+#include "utilidades.h"
 
 typedef struct
 {
@@ -19,7 +21,6 @@ typedef struct
 	float angulo_rotacion;
 	size_t radio;
 }asteroide_t;
-
 
 asteroide_t asteroide;
 disparo_t disparo;
