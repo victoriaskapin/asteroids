@@ -1,12 +1,21 @@
 #include "nave.h"
 
-
-/*void setear_conficiones_iniciales(nave_t *nave)
+nave_t nave_crear()
 {
+	nave_t nave;
 
-	nave_t nave_aux ={500, 400, 0, 0, 0, 0};
-	*nave=nave_aux;
-}*/
+	nave.sp_nave= &sprite[0];
+	nave.sp_chorro= sprite[1];
+	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
+	nave.posicion_x=NAVE_X_INICIAL;
+	nave.posicion_y=NAVE_Y_INICIAL;
+	nave.velocidad_x=NAVE_VX_INICIAL;
+	nave.velocidad_y=NAVE_VY_INICIAL;
+	nave.angulo_rotacion = NAVE_ANGULO_INICIAL;
+	nave.potencia=NAVE_POTENCIA_INICIAL;
+
+	return nave;
+}
 
 void nave_mover(nave_t *nave, float dt, size_t potencia)
 {	
@@ -41,42 +50,11 @@ void nave_mover(nave_t *nave, float dt, size_t potencia)
 
 }
 
-bool nave_dibujar(nave_t *x, SDL_Renderer *r)
+bool nave_dibujar(nave_t *nave, SDL_Renderer *r)
 {
-	//const char a[5]={"SHIP"};
-	return (graficador_dibujar(r, x->sp_nave->nombre, x->escala, x->posicion_x, x->posicion_y, x->angulo_rotacion));//las posiciones tienen que ser con el 0,0 abajo a la izq
-		
+	if(graficador_dibujar(r, nave->sp_nave->nombre, nave->escala, nave->posicion_x, nave->posicion_y, nave->angulo_rotacion)==true)
+		return(graficador_dibujar(r, nave->sp_chorro.nombre, nave->escala, nave->posicion_x, nave->posicion_y, nave->angulo_rotacion));
 }
-
-/*void computar_parametros(struct nave_t nave, float paso_tiempo)
-{
-
-
-	size_t tamanio_nave = sizeof(nave_grande) / sizeof(nave_grande[0]);
-	float **mi_nave;
-
-	*nave.aceleracion_x = *nave.potencia*sin(-*nave.angulo_rotacion);
-	*nave.aceleracion_y = *nave.potencia*cos(-*nave.angulo_rotacion) - G;
-	
-	*nave.velocidad_x = computar_velocidad(*nave.velocidad_x, *nave.aceleracion_x, paso_tiempo*10);
-	*nave.velocidad_y = computar_velocidad(*nave.velocidad_y, *nave.aceleracion_y, paso_tiempo*10);
-
-	*nave.posicion_x = computar_posicion(*nave.posicion_x, *nave.velocidad_x, paso_tiempo);
-	*nave.posicion_y = computar_posicion(*nave.posicion_y, *nave.velocidad_y, paso_tiempo);
-
-	if(*nave.posicion_x<1)
-		*nave.posicion_x=VENTANA_ANCHO;
-
-    if(*nave.posicion_x>VENTANA_ANCHO)
-		*nave.posicion_x=1;
-
-	mi_nave=matriz_a_vector(nave_grande, tamanio_nave);
-	rotar(mi_nave, tamanio_nave, *nave.angulo_rotacion);	
-	trasladar(mi_nave, tamanio_nave, *nave.posicion_x-NAVE_X_INICIAL, *nave.posicion_y-NAVE_Y_INICIAL);
-	renderizar_flotantes(mi_nave, escala, tamanio_nave, DEFASAJE_NAVE_X, DEFASAJE_NAVE_Y, renderer);
-    destruir_vector_float(mi_nave, tamanio_nave);
-
-}*/
 
 double computar_velocidad(double vi, double aceleracion, double dt)
 {
@@ -105,32 +83,5 @@ void trasladar(float **coordenadas, int n, float dx, float dy)
 
 }
 
-bool nave_destruir(nave_t*n)
-{
-	if(n!=NULL){
-		free(n);
-		return true;
-	}
-	else 
-		return false;
-}
 
 
-nave_t nave_crear()
-{
-	nave_t nave;
-	/*nave=malloc(sizeof(nave_t));
-	if(nave==NULL)
-		return NULL;*/
-
-	nave.sp_nave= &sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
-	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
-	nave.posicion_x=NAVE_X_INICIAL;
-	nave.posicion_y=NAVE_Y_INICIAL;
-	nave.velocidad_x=NAVE_VX_INICIAL;
-	nave.velocidad_y=NAVE_VY_INICIAL;
-	nave.angulo_rotacion = NAVE_ANGULO_INICIAL;
-	nave.potencia=0;
-
-	return nave;
-}
