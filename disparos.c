@@ -6,9 +6,9 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 	if (shot==NULL)
 		return NULL;
 
-	shot->sp_disparo=sprite[6];
-	shot->posicion_x=px;
-	shot->posicion_y=-py;
+	shot->sp_disparo=sprite[6];	
+	shot->posicion_x=px+cos(angulo);
+	shot->posicion_y=py+sin(angulo);
 	shot->angulo=angulo;
 	shot->velocidad=VELOCIDAD_DISPARO;
 	shot->tiempo_vida= TIEMPO_VIDA_SHOT;
@@ -22,23 +22,23 @@ void disparo_destruir(disparo_t *shot){
 } 
 
 bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
-	if(shot->tiempo_vida>0){
+	if(shot->tiempo_vida>0.0){
 		return graficador_dibujar(r,
-								shot->sp_disparo.nombre, 
-								shot->escala, 
-								shot->posicion_x,
-								shot->posicion_y, 
-								shot->angulo);
+				shot->sp_disparo.nombre, 
+				shot->escala, 
+				shot->posicion_x,
+				shot->posicion_y, 
+				shot->angulo);
 	}
 	else 
 		return false;
 }
 
 void disparo_mover(disparo_t *shot, float dt){
-	shot->tiempo_vida-=1.0;
-	if (shot->tiempo_vida>0){
-		shot->posicion_x=computar_posicion(shot->posicion_x,shot->velocidad,dt);
-		shot->posicion_y=computar_posicion(shot->posicion_y,shot->velocidad,dt);
+	(shot->tiempo_vida)+=-1.0;
+	if (shot->tiempo_vida>0.0){
+		shot->posicion_x=computar_posicion(shot->posicion_x+cos(shot->angulo),shot->velocidad,dt);
+		shot->posicion_y=computar_posicion(shot->posicion_y+sin(-shot->angulo),shot->velocidad,dt);
 		//trasladar_shot(shot->sp_disparo.cords,shot->sp_disparo.n,px,py);
 	}
 }
@@ -80,12 +80,17 @@ void mover_lista_disparos(lista_t*l_shot,float dt){
 
 bool dibujar_lista_disparos(lista_t*l_shot,SDL_Renderer *r){
 	struct nodo *aux;
+	if(l_shot->prim==NULL)//caso lista vacia
+		return false;
+
 	aux= l_shot->prim;
 	while(aux!=NULL){
+
 		if(disparo_dibujar(((disparo_t*)aux->dato),r)==false)
-			return false;
+			return false;		
 		aux=aux->sig;
 	}
+
 	return true;
 }
 /*

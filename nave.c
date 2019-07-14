@@ -1,55 +1,51 @@
 #include "nave.h"
 
 
-void setear_conficiones_iniciales(nave_t *nave)
+/*void setear_conficiones_iniciales(nave_t *nave)
 {
 
 	nave_t nave_aux ={500, 400, 0, 0, 0, 0};
 	*nave=nave_aux;
-}
+}*/
 
 void nave_mover(nave_t *nave, float dt, size_t potencia)
 {	
 
-
 	nave->velocidad_x*=0.99;
 	nave->velocidad_y*=0.99;
 
-	float aceleracion_x = potencia*sin(nave->angulo_rotacion);
-	float aceleracion_y = potencia*cos(nave->angulo_rotacion);
-	
-
-	//printf("angulo nave %f\n", nave->angulo_rotacion);
-	//printf("ax %f\tay %f\n", aceleracion_x, aceleracion_y);
-
-
+	float aceleracion_x = potencia*cos(nave->angulo_rotacion);
+	float aceleracion_y = potencia*sin(nave->angulo_rotacion);
 
 	nave->velocidad_x = computar_velocidad(nave->velocidad_x, aceleracion_x, dt);
-	nave->velocidad_y = computar_velocidad(nave->velocidad_y, aceleracion_y, dt);
+	nave->velocidad_y = computar_velocidad(nave->velocidad_y, -aceleracion_y, dt);
 
-	//printf("vx %f\tvy %f\n", nave->velocidad_x, nave->velocidad_y);
 	nave->posicion_x = computar_posicion(nave->posicion_x, nave->velocidad_x, dt);
 	nave->posicion_y = computar_posicion(nave->posicion_y, nave->velocidad_y, dt);
 
 
-	if(nave->posicion_x<1)
-		nave->posicion_x=VENTANA_ANCHO;
+	if(nave->posicion_x < 0)
+		nave->posicion_x = VENTANA_ANCHO;
 
-    if(nave->posicion_x>VENTANA_ANCHO)
-		nave->posicion_x=1;
+    if(nave->posicion_x > VENTANA_ANCHO)
+		nave->posicion_x = 0;
+
+	if(nave->posicion_y < 0)
+		nave->posicion_y = VENTANA_ALTO;
+
+	if(nave->posicion_y > VENTANA_ALTO)
+		nave->posicion_y = 0;
 
 
 	//lista_mapear(l, rotar(nave, nave->angulo_rotacion)/*void *(*f)(void *dato)*/);//ESTO FALTA PULIRLO
 
 }
 
-bool nave_dibujar(nave_t x, SDL_Renderer *r)
+bool nave_dibujar(nave_t *x, SDL_Renderer *r)
 {
-	const char a[5]={"SHIP"};
-	if((graficador_dibujar(r, a, 1, x.posicion_x, x.posicion_y, x.angulo_rotacion))==false)//las posiciones tienen que ser con el 0,0 abajo a la izq
-		return false;
+	//const char a[5]={"SHIP"};
+	return (graficador_dibujar(r, x->sp_nave->nombre, x->escala, x->posicion_x, x->posicion_y, x->angulo_rotacion));//las posiciones tienen que ser con el 0,0 abajo a la izq
 		
-	return true;
 }
 
 /*void computar_parametros(struct nave_t nave, float paso_tiempo)
@@ -127,7 +123,7 @@ nave_t nave_crear()
 	if(nave==NULL)
 		return NULL;*/
 
-	nave.sp_nave=&sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
+	nave.sp_nave= &sprite[0];//esto seria mas prolijo pidiendo que le cargue la que coincide con el nombre o en un define asociar el numero con la estructura onda #define ship 0 o un enum no se.  
 	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
 	nave.posicion_x=NAVE_X_INICIAL;
 	nave.posicion_y=NAVE_Y_INICIAL;

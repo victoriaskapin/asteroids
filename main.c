@@ -46,12 +46,12 @@ int main() {
 					case SDLK_UP:
 						if(1)
 						{
-						nave.potencia = potencia_nave(nave, NAVE_POTENCIA_PASO);//aumento potencia
+						nave.potencia += NAVE_POTENCIA_PASO;//aumento potencia
 						}
 						break;
 
 					case SDLK_SPACE:
-						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,-NAVE_ANGULO_INICIAL + nave.angulo_rotacion));
+						if(cargar_disparos(l_shot,nave.posicion_x,nave.posicion_y,nave.angulo_rotacion ));
 						break;
 
 					case SDLK_RIGHT:
@@ -110,7 +110,7 @@ int main() {
 		//	break;
 		if(dibujar_lista_disparos(l_shot,renderer))
 			;
-		if((nave_dibujar(nave, renderer))==false)
+		if((nave_dibujar(&nave, renderer))==false)
 			break;
 		
 		// END código del alumno
