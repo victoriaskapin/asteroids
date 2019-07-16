@@ -111,6 +111,18 @@ void asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
 
 	if(distancia(asteroide,nave->posicion_x,nave->posicion_y) <=asteroide->radio)
 		nave->vida=0;
+	struct nodo *aux;
+	aux= l_shot->prim;
+	while(aux!=NULL){
+		if(distancia(asteroide,
+			((disparo_t*)aux->dato)->posicion_x,
+			((disparo_t*)aux->dato)->posicion_y)<=asteroide->radio)
+				
+				((disparo_t*)aux->dato)->tiempo_vida=0.0;//elimina los disparos.
+				
+
+		aux=aux->sig;
+	}
 }
 
 void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot ){

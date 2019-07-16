@@ -7,6 +7,7 @@ typedef struct
 {
 	sprite_t *sp_nave;
 	sprite_t sp_chorro;
+	size_t vida;
 	float escala;
 	float posicion_x;
 	float posicion_y;
