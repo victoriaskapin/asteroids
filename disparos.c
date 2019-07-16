@@ -39,15 +39,6 @@ void disparo_mover(disparo_t *shot, float dt){
 	if (shot->tiempo_vida>0.0){
 		shot->posicion_x=computar_posicion(shot->posicion_x+cos(shot->angulo),shot->velocidad,dt);
 		shot->posicion_y=computar_posicion(shot->posicion_y+sin(-shot->angulo),shot->velocidad,dt);
-		//trasladar_shot(shot->sp_disparo.cords,shot->sp_disparo.n,px,py);
-	}
-}
-
-void trasladar_shot(float (*coordenadas)[2], int n, float dx, float dy){
-	for(int i=0; i<n; i++)
-	{
-		coordenadas[i][0] += dx;
-		coordenadas[i][1] += dy;
 	}
 }
 
@@ -56,19 +47,6 @@ bool cargar_disparos(lista_t *l_shot,float px,float py,float angulo){
 	return (lista_insertar_comienzo(l_shot,shot));//cargo en el comienzo de la lista de disparos el nuevo disparo
 }
 
-/*bool dibujar_lista_disparos(lista_t*l_shot,SDL_Renderer *r){
-	lista_iterador_t *li;
-	li=lista_iterador_crear(l_shot);
-	if(li==NULL)
-		return false;
-	while(lista_iterador_siguiente(li)){
-		struct nodo* disparo =lista_iterador_actual(li);
-		if(disparo_dibujar(disparo->dato,r)==false)
-			return false;
-	}
-	lista_iterador_eliminar(li);
-	return true;
-}*/
 void mover_lista_disparos(lista_t*l_shot,float dt){
 	struct nodo *aux;
 	aux= l_shot->prim;

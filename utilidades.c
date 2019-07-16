@@ -3,10 +3,7 @@
 
 float generar_aleatorio(float superior, float inferior)
 {
-	float numero_aleatorio=(rand()%RAND_MAX); /*da un numero entre 1 y RAND_MAX*/
-	float random = (numero_aleatorio/RAND_MAX);//lo escalo para que de entre 0 y 1
-
-	return random*(superior - inferior) + inferior;/*x entre x_max y x_min*/
+	return ((superior-inferior) * ((float)rand()/(float)RAND_MAX) + inferior );/*x entre x_max y x_min*/
 }
 
 float **crear_vector(size_t filas, size_t columnas)

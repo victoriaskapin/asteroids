@@ -20,18 +20,18 @@ int main() {
 
 	// BEGIN código del alumno
 	//status_t st;
+	srand(time(NULL));
 	graficador_inicializar("sprites.bin");
 
-	float tiempo=0, dt=1.0/JUEGO_FPS;
-	size_t cant_asteroides = CANT_INICIAL_ASTEROIDES;
-	
+	float tiempo=0.0;
+
 	//setear_conficiones_iniciales(&nave);
 	nave_t nave=nave_crear();
-	crear_asteorides(cant_asteroides);//funcion que se llama cuando hay que crear asteroides de 0
-
 	lista_t *l_shot=lista_crear();//creo la lista a llenar de disparos
-
-
+	lista_t *l_rock=lista_crear();
+	
+	if(crear_asteroides(CANT_INICIAL_ASTEROIDES, l_rock))
+		puts("se crearon los asteroides");//funcion que se llama cuando hay que crear asteroides de 0
 	// END código del alumno
 
 	unsigned int ticks = SDL_GetTicks();
@@ -44,7 +44,7 @@ int main() {
 				switch(event.key.keysym.sym) 
 				{
 					case SDLK_UP:
-						if(1)
+						if(nave.potencia < NAVE_POTENCIA_PASO)
 						{
 						nave.potencia += NAVE_POTENCIA_PASO;//aumento potencia
 						}
@@ -74,14 +74,15 @@ int main() {
 
 
 		// BEGIN código del alumno
-		tiempo+=dt;
+		tiempo+=DT;
 		
 		nave.potencia=nave.potencia*0.9;
 
-		nave_mover(&nave, dt, nave.potencia);
-		mover_lista_disparos(l_shot,dt);
-		//objeto_mover(&disparo, dt, 0);
-		//objeto_mover(&asteroide, dt, 0);
+		nave_mover(&nave, DT, nave.potencia);
+		mover_lista_disparos(l_shot,DT);
+		mover_lista_asteroides(l_rock,DT);
+		//objeto_mover(&disparo, DT, 0);
+		//objeto_mover(&asteroide, DT, 0);
 
 
 		///////////   POR AHI HACER UN CASE PARA ESTO ////////////
@@ -106,7 +107,8 @@ int main() {
 		//if((disparo_dibujar(disparo, renderer))==false)//dibujo cada elemento de la lista
 		//	break;
 
-		//if((asteroide_dibujar(asteroide, renderer))==false)//dibujo cada elemento de la lista
+		if(dibujar_lista_asteroides(l_rock,renderer))
+			;//dibujo cada elemento de la lista
 		//	break;
 		if(dibujar_lista_disparos(l_shot,renderer))
 			;
