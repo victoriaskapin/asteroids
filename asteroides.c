@@ -116,12 +116,13 @@ void asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
 	while(aux!=NULL){
 		if(distancia(asteroide,
 			((disparo_t*)aux->dato)->posicion_x,
-			((disparo_t*)aux->dato)->posicion_y)<=asteroide->radio)
-				
+			((disparo_t*)aux->dato)->posicion_y)<=asteroide->radio){
 				((disparo_t*)aux->dato)->tiempo_vida=0.0;//elimina los disparos.
+				aux=aux->sig;
+			}
 				
-
-		aux=aux->sig;
+		else 
+			aux=aux->sig;
 	}
 }
 

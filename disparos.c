@@ -12,7 +12,7 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 	shot->angulo=angulo;
 	shot->velocidad=VELOCIDAD_DISPARO;
 	shot->tiempo_vida= TIEMPO_VIDA_SHOT;
-	shot->escala=ESCALA_DISPARO;
+	shot->escala=ESCALA_DISPARO; 
 
 	return shot;
 }
@@ -65,8 +65,9 @@ bool dibujar_lista_disparos(lista_t*l_shot,SDL_Renderer *r){
 	while(aux!=NULL){
 
 		if(disparo_dibujar(((disparo_t*)aux->dato),r)==false)
-			return false;		
-		aux=aux->sig;
+			aux=aux->sig;
+		else
+			aux=aux->sig;
 	}
 
 	return true;
