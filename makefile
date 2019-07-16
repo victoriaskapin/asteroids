@@ -1,4 +1,3 @@
-
 CC = gcc
 CFLAGS = -pedantic -Wall -std=c99 
 
@@ -25,7 +24,7 @@ utilidades.o: utilidades.c
 iterador.o: iterador.c lista.c lista.h iterador.h
 	$(CC) $(CFLAGS) -o iterador.o -c iterador.c
 
-main.o: main.c iterador.c modulo.c nave.c lista.c asteroides.c asteroides.h lista.h modulo.h iterador.h nave.h config.h lista.c lista.h
+main.o: main.c iterador.c modulo.c nave.c lista.c asteroides.c asteroides.h lista.h modulo.h iterador.h nave.h config.h lista.c lista.h utilidades.h
 	$(CC) $(CFLAGS) -o main.o -c main.c
 
 tp2: lista.o modulo.o nave.o iterador.o main.o asteroides.o disparos.o utilidades.o

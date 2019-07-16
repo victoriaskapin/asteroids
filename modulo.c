@@ -15,18 +15,13 @@ bool graficador_inicializar(const char *fn){
 		fread(&(sprite[k].nombre),sizeof(char),10,fp);//cargo el nombre
 		fread(&(sprite[k].n),sizeof(uint16_t),1,fp);//cargo el n
 		
-		printf("nombre:%s n:%u \n",sprite[k].nombre, sprite[k].n);
 
 		sprite[k].cords=malloc(sizeof(float*)*sprite[k].n*2);//pido memoria para la matriz dinamica de 2 columnas
 		
 		for(int j=0;j<(int)sprite[k].n;j++){
 			fread(&sprite[k].cords[j][0],sizeof(float),1,fp);//cargo la matriz
 			fread(&sprite[k].cords[j][1],sizeof(float),1,fp);//cargo la matriz
-			printf("coordenadas (%f ; %f)\n", sprite[k].cords[j][0], sprite[k].cords[j][1]);
-
 		}
-			//graficador_ajustar_variables( &(sprite[i].cords[j][0]),&(sprite[i].cords[j][1]));
-
 	}	
 	fclose(fp);
 	printf("sale de inicializador\n");
@@ -59,17 +54,15 @@ bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float 
 			break;
 	}
 	
-	printf("%s\n",sprite[i].nombre);
 	//cargo las coordenadas que quiero graficar rotadas en el angulo correspondiente en una nueva matriz auxiliar para no modificar los datos iniciales. 
 	float **objeto;
 	objeto = matriz_a_vector(sprite[i].cords, sprite[i].n);
+	if (objeto==NULL)
+		return false;
 	rotar(objeto, sprite[i].n, angulo);	
 
-	//printf("x %f\ty %f\n", x, y);
+	//trasladar(objeto, sprite[i].n, x, y-400); // esta no hace falta porque ya estas trasladando en x e y cuando lo graficas al sumarle las variables 
 
-	trasladar(objeto, sprite[i].n, x, y-400);
-
-	printf("n: %u\n",sprite[i].n);
 	
 	for(j = 0; j < sprite[i].n -1 ; j++){//grafico la matriz rotada, desplazada en x e y; 
 		SDL_RenderDrawLine(
@@ -80,9 +73,11 @@ bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float 
 			-objeto[j+1][1] * escala + y 
 		);
 	}	
+
+	destruir_vector(objeto,sprite[i].n);
+
 	return true;
 }
-
 
 /*void graficador_finalizar() //no hace falta porque declare todo estatico 
 {
