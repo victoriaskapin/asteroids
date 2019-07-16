@@ -53,13 +53,12 @@ void nave_mover(nave_t *nave, float dt, size_t potencia)
 bool nave_dibujar(nave_t *nave, SDL_Renderer *r)
 {
 	if(graficador_dibujar(r, nave->sp_nave->nombre, nave->escala, nave->posicion_x, nave->posicion_y, nave->angulo_rotacion)==true){
-		if(nave->potencia > 0){
+		if(nave->potencia > 0)
 			return(graficador_dibujar(r, nave->sp_chorro.nombre, nave->escala, nave->posicion_x, nave->posicion_y, nave->angulo_rotacion));
-		}
 		else 
 			return true;
 	}
-	else
+	else 
 		return false;
 }
 
