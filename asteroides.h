@@ -29,10 +29,13 @@ void asteroide_mover(asteroide_t *rock, float dt);
 bool asteroide_dibujar(asteroide_t *rock,SDL_Renderer *r);
 void asteroide_destruir(asteroide_t *asteroide);
 bool cargar_asteroides_lista(lista_t *l_rock, float px, float py,size_t radio);
-bool crear_asteroides(size_t cant,lista_t* l_rock);
+bool crear_asteroides_iniciales(size_t cant,lista_t* l_rock);
 void mover_lista_asteroides(lista_t*l_rock,float dt);
 bool dibujar_lista_asteroides(lista_t*l_rock,SDL_Renderer *r);
 
+float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y);
+void asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide);
+void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot );
 
 /*asteroide_t asteroide;
 disparo_t disparo;

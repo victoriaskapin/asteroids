@@ -30,7 +30,7 @@ int main() {
 	lista_t *l_shot=lista_crear();//creo la lista a llenar de disparos
 	lista_t *l_rock=lista_crear();
 	
-	if(crear_asteroides(CANT_INICIAL_ASTEROIDES, l_rock))
+	if(crear_asteroides_iniciales(CANT_INICIAL_ASTEROIDES, l_rock))
 		puts("se crearon los asteroides");//funcion que se llama cuando hay que crear asteroides de 0
 	// END código del alumno
 
@@ -81,6 +81,13 @@ int main() {
 		nave_mover(&nave, DT, nave.potencia);
 		mover_lista_disparos(l_shot,DT);
 		mover_lista_asteroides(l_rock,DT);
+
+		lista_asteroide_choco(l_rock,&nave,l_shot);
+
+		if(!nave.vida){
+			//dormir=3000;
+			nave=nave_crear();
+		}
 		//objeto_mover(&disparo, DT, 0);
 		//objeto_mover(&asteroide, DT, 0);
 
@@ -112,8 +119,10 @@ int main() {
 		//	break;
 		if(dibujar_lista_disparos(l_shot,renderer))
 			;
-		if((nave_dibujar(&nave, renderer))==false)
-			break;
+		if(nave.vida)
+			if((nave_dibujar(&nave, renderer))==false)
+				break;
+
 		
 		// END código del alumno
 
