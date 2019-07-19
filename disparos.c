@@ -7,8 +7,8 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 		return NULL;
 
 	shot->sp_disparo=sprite[6];	
-	shot->posicion_x=px+cos(angulo);
-	shot->posicion_y=py+sin(angulo);
+	shot->posicion_x=px;//+cos(angulo);
+	shot->posicion_y=py;//+sin(angulo);
 	shot->angulo=angulo;
 	shot->velocidad=VELOCIDAD_DISPARO;
 	shot->tiempo_vida= TIEMPO_VIDA_SHOT;
@@ -22,16 +22,16 @@ void disparo_destruir(disparo_t *shot){
 } 
 
 bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
-	//if(shot->tiempo_vida>0.0){
+	if(shot->tiempo_vida>0.0){
 		return graficador_dibujar(r,
 				shot->sp_disparo.nombre, 
 				shot->escala, 
 				shot->posicion_x,
 				shot->posicion_y, 
 				shot->angulo);
-	//}
-	//else 
-	//	return false;
+	}
+	else 
+		return false;
 }
 
 void disparo_mover(disparo_t *shot, float dt){
@@ -51,10 +51,10 @@ void mover_lista_disparos(lista_t*l_shot,float dt){
 	while(aux!=NULL){
 		if(((disparo_t*)aux->dato)->tiempo_vida > 0.0)
 			disparo_mover(((disparo_t*)aux->dato),dt);
-		else 
-			lista_estructura_borrar(l_shot, (disparo_t*)aux->dato); 
-
-		aux=aux->sig;
+		else {
+			lista_estructura_borrar(l_shot, ((disparo_t*)aux->dato)); 
+		}
+			aux=aux->sig;
 	}
 }
 

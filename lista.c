@@ -132,25 +132,32 @@ lista_t *cargar_lista(sprite_t *modulo, lista_t *l)
 void lista_estructura_borrar(lista_t *l, void *estructura) 
 {
    // Borro al principio:
-   
-   while(l->prim && l->prim->dato == estructura) 
+	if(l->prim==NULL)
+		return;
+
+   while(l->prim->dato == estructura) 
    {
       struct nodo *aux = l->prim->sig;
-      //free(l->prim->dato);
+      free(l->prim->dato);
       //free(l->prim);
       l->prim = aux;
+      if(l->prim==NULL)
+      	break;
    }
 
    // Borro del resto:
-   struct nodo *ant = l->prim;
+   struct nodo *ant = l->prim; 
+   if(ant == NULL)
+   		return;
    struct nodo *actual;
-   while(ant->sig) 
+
+   while(ant->sig != NULL) 
    {
       actual = ant->sig;
       if(actual->dato == estructura) 
       {
          ant->sig = actual->sig;
-        // free(actual->dato);
+         free(actual->dato);
          //free(actual);
       }
       else
