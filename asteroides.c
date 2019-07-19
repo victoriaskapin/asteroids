@@ -107,23 +107,24 @@ float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y)
 	return sqrt(modulo_cuadrado);
 }//DEVUELVE LA DISTANCIA AL CENTRO DEL ASTEROIDE;
 
-void asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
-
+bool asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
+	//CHEQUEO CON LA NAVE
 	if(distancia(asteroide,nave->posicion_x,nave->posicion_y) <=asteroide->radio)
 		nave->vida=0;
+
 	struct nodo *aux;
 	aux= l_shot->prim;
 	while(aux!=NULL){
 		if(distancia(asteroide,
 			((disparo_t*)aux->dato)->posicion_x,
 			((disparo_t*)aux->dato)->posicion_y)<=asteroide->radio){
-				((disparo_t*)aux->dato)->tiempo_vida=0.0;//elimina los disparos.
-				aux=aux->sig;
+			
+			((disparo_t*)aux->dato)->tiempo_vida=0.0;//elimina los disparos.
+			return true;
 			}
-				
-		else 
-			aux=aux->sig;
+		aux=aux->sig;
 	}
+	return false;
 }
 
 void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot ){
@@ -131,7 +132,30 @@ void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot ){
 	struct nodo *aux;
 	aux= l_rock->prim;
 	while(aux!=NULL){
-		asteroide_choco(nave,l_shot,(asteroide_t*)aux->dato);
+		if(asteroide_choco(nave,l_shot,((asteroide_t*)aux->dato))){
+			
+			if(((asteroide_t*)aux->dato)->radio == ASTEROIDE_RADIO_CHICO)
+				lista_estructura_borrar(l_rock,
+					((asteroide_t*)aux->dato));
+
+			else if(((asteroide_t*)aux->dato)->radio == ASTEROIDE_RADIO_MEDIANO){
+				if(cargar_asteroides_lista(l_rock,
+					((asteroide_t*)aux->dato)->posicion_x,
+					((asteroide_t*)aux->dato)->posicion_y,
+					ASTEROIDE_RADIO_CHICO))
+					lista_estructura_borrar(l_rock,
+					((asteroide_t*)aux->dato));
+			}
+
+			else if(((asteroide_t*)aux->dato)->radio == ASTEROIDE_RADIO_GRANDE){
+				if(cargar_asteroides_lista(l_rock,
+					((asteroide_t*)aux->dato)->posicion_x,
+					((asteroide_t*)aux->dato)->posicion_y,
+					ASTEROIDE_RADIO_MEDIANO))
+					lista_estructura_borrar(l_rock,
+					((asteroide_t*)aux->dato));
+			}
+		}
 		aux=aux->sig;
 	}
 }

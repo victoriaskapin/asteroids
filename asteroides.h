@@ -1,9 +1,9 @@
 #ifndef _ASTEROIDES_H_
 #define _ASTEROIDES_H_
 
-#define ASTEROIDE_RADIO_CHICO 8.0
-#define ASTEROIDE_RADIO_MEDIANO 16.0
-#define ASTEROIDE_RADIO_GRANDE 32.0
+#define ASTEROIDE_RADIO_CHICO 8
+#define ASTEROIDE_RADIO_MEDIANO 16
+#define ASTEROIDE_RADIO_GRANDE 32
 #define ASTEROIDES_DESTRUIDOS 0
 #define VELOCIDAD_ASTEROIDE_ORIGINAL 1000.0
 #define VELOCIDAD_ASTEROIDE_OFFSET 100.0
@@ -34,7 +34,7 @@ void mover_lista_asteroides(lista_t*l_rock,float dt);
 bool dibujar_lista_asteroides(lista_t*l_rock,SDL_Renderer *r);
 
 float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y);
-void asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide);
+bool asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide);
 void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot );
 
 /*asteroide_t asteroide;
