@@ -55,11 +55,14 @@ int main() {
 						break;
 
 					case SDLK_RIGHT:
-						(nave.angulo_rotacion) += NAVE_ROTACION_PASO;
+						
+						(nave.angulo_rotacion) -= NAVE_ROTACION_PASO;
+						
 						break;
 					
 					case SDLK_LEFT:
-						(nave.angulo_rotacion) -= NAVE_ROTACION_PASO;
+						
+							(nave.angulo_rotacion) += NAVE_ROTACION_PASO;
 						break;
 				}
 				// END código del alumno

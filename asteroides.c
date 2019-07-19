@@ -142,19 +142,29 @@ void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot ){
 				if(cargar_asteroides_lista(l_rock,
 					((asteroide_t*)aux->dato)->posicion_x,
 					((asteroide_t*)aux->dato)->posicion_y,
-					ASTEROIDE_RADIO_CHICO))
+					ASTEROIDE_RADIO_CHICO)){
+					if(cargar_asteroides_lista(l_rock,
+					((asteroide_t*)aux->dato)->posicion_x,
+					((asteroide_t*)aux->dato)->posicion_y,
+					ASTEROIDE_RADIO_CHICO));
 					lista_estructura_borrar(l_rock,
 					((asteroide_t*)aux->dato));
-			}
+				}				
+			}//crea asteroides chicos
 
 			else if(((asteroide_t*)aux->dato)->radio == ASTEROIDE_RADIO_GRANDE){
 				if(cargar_asteroides_lista(l_rock,
 					((asteroide_t*)aux->dato)->posicion_x,
 					((asteroide_t*)aux->dato)->posicion_y,
+					ASTEROIDE_RADIO_MEDIANO)){
+					if(cargar_asteroides_lista(l_rock,
+					((asteroide_t*)aux->dato)->posicion_x,
+					((asteroide_t*)aux->dato)->posicion_y,
 					ASTEROIDE_RADIO_MEDIANO))
-					lista_estructura_borrar(l_rock,
-					((asteroide_t*)aux->dato));
-			}
+						lista_estructura_borrar(l_rock,
+						((asteroide_t*)aux->dato));
+					}
+			}//crea asteroides medianos 
 		}
 		aux=aux->sig;
 	}
