@@ -29,6 +29,7 @@ void *lista_extraer_primero(lista_t *l);
 void *lista_buscar(const lista_t *l, const void *d, int (*cmp)(const void *a, const void *b));
 void lista_mapear(lista_t *l, void *(*f)(void *dato));
 
+void lista_estructura_borrar(lista_t *l, void *estructura);
 lista_t *cargar_lista(sprite_t *modulo, lista_t *l);
 
 #endif

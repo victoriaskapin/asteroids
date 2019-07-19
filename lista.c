@@ -136,19 +136,22 @@ void lista_estructura_borrar(lista_t *l, void *estructura)
    while(l->prim && l->prim->dato == estructura) 
    {
       struct nodo *aux = l->prim->sig;
-      free(l->prim);
+      //free(l->prim->dato);
+      //free(l->prim);
       l->prim = aux;
    }
 
    // Borro del resto:
    struct nodo *ant = l->prim;
+   struct nodo *actual;
    while(ant->sig) 
    {
-      struct nodo *actual = ant->sig;
+      actual = ant->sig;
       if(actual->dato == estructura) 
       {
          ant->sig = actual->sig;
-         free(actual);
+        // free(actual->dato);
+         //free(actual);
       }
       else
           ant = actual;

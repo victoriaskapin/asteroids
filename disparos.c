@@ -22,24 +22,22 @@ void disparo_destruir(disparo_t *shot){
 } 
 
 bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
-	if(shot->tiempo_vida>0.0){
+	//if(shot->tiempo_vida>0.0){
 		return graficador_dibujar(r,
 				shot->sp_disparo.nombre, 
 				shot->escala, 
 				shot->posicion_x,
 				shot->posicion_y, 
 				shot->angulo);
-	}
-	else 
-		return false;
+	//}
+	//else 
+	//	return false;
 }
 
 void disparo_mover(disparo_t *shot, float dt){
-	(shot->tiempo_vida)+=-1.0;
-	if (shot->tiempo_vida>0.0){
-		shot->posicion_x=computar_posicion(shot->posicion_x+cos(shot->angulo),shot->velocidad,dt);
-		shot->posicion_y=computar_posicion(shot->posicion_y+sin(-shot->angulo),shot->velocidad,dt);
-	}
+	(shot->tiempo_vida)+=-dt;
+	shot->posicion_x=computar_posicion(shot->posicion_x+cos(shot->angulo),shot->velocidad,dt);
+	shot->posicion_y=computar_posicion(shot->posicion_y+sin(-shot->angulo),shot->velocidad,dt);
 }
 
 bool cargar_disparos(lista_t *l_shot,float px,float py,float angulo){
@@ -51,7 +49,11 @@ void mover_lista_disparos(lista_t*l_shot,float dt){
 	struct nodo *aux;
 	aux= l_shot->prim;
 	while(aux!=NULL){
-		disparo_mover(((disparo_t*)aux->dato),dt);
+		if(((disparo_t*)aux->dato)->tiempo_vida > 0.0)
+			disparo_mover(((disparo_t*)aux->dato),dt);
+		else 
+			lista_estructura_borrar(l_shot, (disparo_t*)aux->dato); 
+
 		aux=aux->sig;
 	}
 }

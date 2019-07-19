@@ -78,11 +78,12 @@ int main() {
 		
 		nave.potencia=nave.potencia*0.9;
 
+		lista_asteroide_choco(l_rock,&nave,l_shot);
+
 		nave_mover(&nave, DT, nave.potencia);
 		mover_lista_disparos(l_shot,DT);
 		mover_lista_asteroides(l_rock,DT);
 
-		lista_asteroide_choco(l_rock,&nave,l_shot);
 
 		if(!nave.vida){
 			//dormir=3000;
