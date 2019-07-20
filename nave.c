@@ -20,9 +20,10 @@ nave_t nave_crear()
 
 void nave_mover(nave_t *nave, float dt, size_t potencia)
 {	
+	nave->velocidad_x -= nave->velocidad_x*0.01;
+	nave->velocidad_y  -= nave->velocidad_y*0.01;
+	nave->potencia -= nave->potencia*0.1;
 
-	nave->velocidad_x*=0.99;
-	nave->velocidad_y*=0.99;
 
 	float aceleracion_x = potencia*cos(nave->angulo_rotacion);
 	float aceleracion_y = potencia*sin(nave->angulo_rotacion);

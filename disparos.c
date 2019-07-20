@@ -36,8 +36,8 @@ bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
 
 void disparo_mover(disparo_t *shot, float dt){
 	(shot->tiempo_vida)+=-dt;
-	shot->posicion_x=computar_posicion(shot->posicion_x+cos(shot->angulo),shot->velocidad,dt);
-	shot->posicion_y=computar_posicion(shot->posicion_y+sin(-shot->angulo),shot->velocidad,dt);
+	shot->posicion_x=computar_posicion(shot->posicion_x,shot->velocidad*cos(shot->angulo),dt);
+	shot->posicion_y=computar_posicion(shot->posicion_y,-(shot->velocidad*sin(shot->angulo)),dt);
 }
 
 bool cargar_disparos(lista_t *l_shot,float px,float py,float angulo){
@@ -66,26 +66,9 @@ bool dibujar_lista_disparos(lista_t*l_shot,SDL_Renderer *r){
 	aux= l_shot->prim;
 	while(aux!=NULL){
 
-		if(disparo_dibujar(((disparo_t*)aux->dato),r)==false)
-			aux=aux->sig;
-		else
-			aux=aux->sig;
+		if(disparo_dibujar(((disparo_t*)aux->dato),r));
+		aux=aux->sig;
 	}
 
 	return true;
 }
-/*
-bool eliminar_disparos(lista_t *l_shot){
-	lista_iterador_t *li;
-	li= lista_iterador_crear(l_shot);
-	if(li==NULL)
-		return false;
-	while(lista_iterador_siguiente(li)){
-		struct nodo* disparo =lista_iterador_actual(li);
-		if (asteroide_choco(disparo->dato)==2)
-			iterador_eliminar(li);
-		if(disparo->dato->tiempo_vida<=0)
-			iterador_eliminar(li);
-	}
-	lista_iterador_eliminar(li);
-}*/
