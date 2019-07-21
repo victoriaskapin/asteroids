@@ -101,3 +101,14 @@ void mensajes_finde_partida(SDL_Renderer *renderer,int score){
 	dibujar_string(string,DICCIONARIO,n_string,renderer,desplazamiento,posicion_y,escala);
 	
 }
+
+void mensaje_iniciode_partida(SDL_Renderer *renderer){
+	size_t n_string;
+	char string [MAX_STRING];
+	float desplazamiento=X_GAMEOVER;
+	float posicion_y=Y_GAMEOVER;
+	float escala = 4;
+
+	n_string = (sprintf(string,"%s","press space to start"));
+	dibujar_string(string,DICCIONARIO,n_string,renderer,desplazamiento,posicion_y,escala);
+}

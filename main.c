@@ -33,7 +33,7 @@ int main() {
 	
 	if(crear_asteroides_iniciales(cantidad_asteroides, l_rock));
 	//funcion que se llama cuando hay que crear asteroides de 0
-	
+
 	// END código del alumno
 
 	unsigned int ticks = SDL_GetTicks();
@@ -53,10 +53,12 @@ int main() {
 					case SDLK_SPACE:
 						if (!flag)
 							flag=1;
-						if(cargar_disparos(
-							l_shot,nave.posicion_x,
-							nave.posicion_y,
-							nave.angulo_rotacion));
+						
+						else if(nave.vida)
+							if(cargar_disparos(
+								l_shot,nave.posicion_x,
+								nave.posicion_y,
+								nave.angulo_rotacion));
 						break;
 
 					case SDLK_RIGHT:	
@@ -106,6 +108,9 @@ int main() {
 				}
 			}
 		}
+		if(!flag){
+			mensaje_iniciode_partida(renderer);
+		}
 	
 		//verifico si quedan asteroides 
 		if(lista_es_vacia(l_rock)){
@@ -125,7 +130,7 @@ int main() {
 		// END código del alumno
 
 
-        	SDL_RenderPresent(renderer);
+        SDL_RenderPresent(renderer);
 		ticks = SDL_GetTicks() - ticks;
 		if(dormir) {
 			SDL_Delay(dormir);
