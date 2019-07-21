@@ -10,7 +10,7 @@ typedef struct {
 	struct nodo *prim;
 }lista_t;
 
-#include "utilidades.h"
+#include "herramientas.h"
 
 struct nodo *nodo_crear(void *d);
 lista_t *lista_crear();

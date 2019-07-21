@@ -1,7 +1,7 @@
 #ifndef _GRAFICAR_H_
 #define _GRAFICAR_H_
 
-#include "utilidades.h"
+#include "herramientas.h"
 
 #include "caracteres.h"
 

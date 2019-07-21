@@ -1,7 +1,7 @@
 #ifndef _DISPAROS_H_
 #define _DISPAROS_H_
 
-#include "utilidades.h"
+#include "herramientas.h"
 
 typedef struct
 {

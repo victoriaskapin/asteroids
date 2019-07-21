@@ -1,4 +1,4 @@
-#include "utilidades.h"
+#include "herramientas.h"
 
 
 float generar_aleatorio(float superior, float inferior)

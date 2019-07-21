@@ -1,5 +1,5 @@
-all: asteroides.o caracteres.o disparos.o graficar.o  lista.o modulo.o nave.o utilidades.o main.o
-	gcc -std=c99 -Wall -pedantic -g asteroides.o caracteres.o disparos.o graficar.o lista.o modulo.o nave.o utilidades.o main.o -o asteroids -lm -lSDL2
+all: asteroides.o caracteres.o disparos.o graficar.o  lista.o modulo.o nave.o herramientas.o main.o
+	gcc -std=c99 -Wall -pedantic -g asteroides.o caracteres.o disparos.o graficar.o lista.o modulo.o nave.o herramientas.o main.o -o asteroids -lm -lSDL2
 
 asteroides.o: asteroides.c
 	gcc -std=c99 -Wall -pedantic -c asteroides.c -o asteroides.o -lm -lSDL2
@@ -22,8 +22,8 @@ modulo.o: modulo.c
 nave.o: nave.c 
 	gcc -std=c99 -Wall -pedantic  -c nave.c -o nave.o -lm -lSDL2
 
-utilidades.o: utilidades.c 
-	gcc -std=c99 -Wall -pedantic  -c utilidades.c -o utilidades.o -lm -lSDL2
+herramientas.o: herramientas.c 
+	gcc -std=c99 -Wall -pedantic  -c herramientas.c -o herramientas.o -lm -lSDL2
 
 main.o: main.c
 	gcc -std=c99 -Wall -pedantic  -c main.c -o main.o -lm -lSDL2

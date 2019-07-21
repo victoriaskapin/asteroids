@@ -1,5 +1,5 @@
-#ifndef _UTILIDADES_H_
-#define _UTILIDADES_H_
+#ifndef _HERRAMIENTAS_H_
+#define _HERRAMIENTAS_H_
 
 #include <SDL2/SDL.h>
 #include <time.h>
