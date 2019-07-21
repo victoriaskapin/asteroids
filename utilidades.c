@@ -23,34 +23,6 @@ float **crear_vector(size_t filas, size_t columnas)
 	return vector;
 }
 
-float ** vector_rotar(float coordenadas[][2], size_t n, float rad){
-	int i;
-	float **rotada;
-	float coseno_angulo,seno_angulo;
-
-	rotada=malloc(sizeof(float)*n);
-	if (rotada==NULL)
-		return NULL;
-
-	coseno_angulo=cos(rad);
-	seno_angulo=sin(rad);
-	for(i=0;i<n;i++){
-
-		rotada[i]=malloc (sizeof(float)*2);
-		
-		if (rotada[i]==NULL){
-			for(int j=0;j<i;j++)
-				free(rotada[j]);
-			free(rotada);
-			return NULL;
-		}
-
-		rotada[i][0] = coordenadas[i][0]*coseno_angulo-coordenadas[i][1]*seno_angulo;
-		rotada[i][1] = coordenadas[i][0]*seno_angulo+coordenadas[i][1]*coseno_angulo;
-	}
-	return rotada;
-}
-
 void destruir_vector(float **v,size_t n){
 
 	for(int i = 0;i < n;i++){
@@ -100,4 +72,12 @@ void rotar(float **coordenadas, int n, double rad)
 		
 	}
 
+}
+
+
+int bestscore(int best_score,int score){
+	if (score > best_score)
+		return score;
+
+	else return best_score;
 }

@@ -24,7 +24,10 @@ int main() {
 	graficador_inicializar("sprites.bin");
 
 	float tiempo = 0.0;
+	int score = 0;
+	int best_score = 0;
 	int cantidad_asteroides = CANT_INICIAL_ASTEROIDES;
+	int vida_nave = NAVE_VIDAS_INICIALES;
 
 	//setear_conficiones_iniciales(&nave);
 	nave_t nave = nave_crear();
@@ -76,17 +79,31 @@ int main() {
 		// BEGIN código del alumno
 		tiempo+=DT;
 		
-		lista_asteroide_choco(l_rock,&nave,l_shot);
+		lista_asteroide_choco(l_rock,&nave,l_shot,&score);
 
 		nave_mover(&nave, DT, nave.potencia);
 		mover_lista_disparos(l_shot,DT);
 		mover_lista_asteroides(l_rock,DT);
 
+		datos_en_pantalla(renderer,score,best_score,vida_nave);
+
 
 		if(!nave.vida){
-			//dormir=3000;
+			dormir=1000;
+			vida_nave-=1;
 			nave=nave_crear();
+			nave.vida=vida_nave;
+
+			if(!vida_nave){//caso que no queden mas vidas
+				best_score=bestscore(best_score,score);
+				dormir = 3000;
+				mensajes_finde_partida(renderer,score);
+				vida_nave=NAVE_VIDAS_INICIALES;
+				score=0;
+			}
 		}
+
+	
 		//verifico si quedan asteroides 
 		if(lista_es_vacia(l_rock)){
 			cantidad_asteroides+=2;
@@ -117,7 +134,7 @@ int main() {
 	}
 
 	// BEGIN código del alumno
-	// No tengo nada que destruir.
+	graficador_finalizar();
 	// END código del alumno
 
 	SDL_DestroyRenderer(renderer);

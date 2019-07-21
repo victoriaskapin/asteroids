@@ -34,6 +34,3 @@ lista_t *cargar_lista(sprite_t *modulo, lista_t *l);
 
 #endif
 
-/*void *lista_extraer_ultimo(lista_t *l);
-void *lista_borrar(lista_t *l, const void *dato, int (*cmp)(const void *a, const void *b));
-void lista_recorrer(const lista_t *l, bool (*visitar)(void *dato, void *extra), void *extra);*/

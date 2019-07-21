@@ -34,6 +34,7 @@
 #define NAVE_Y_INICIAL 400
 #define NAVE_VX_INICIAL 0
 #define NAVE_VY_INICIAL 0
+#define NAVE_VIDAS_INICIALES 4
 
 #define ACELERACION_INICIAL_X 0
 #define ACELERACION_INICIAL_Y 0
@@ -44,17 +45,6 @@
 #define VELOCIDAD_DISPARO 1000.0
 #define TIEMPO_VIDA_SHOT 0.7
 #define ESCALA_DISPARO 5
-
-//GRAFICOS 
-
-#define DEFASAJE_NAVE_X 0
-#define DEFASAJE_NAVE_Y 0
-#define ESCALA_NAVE 1
-#define PRIMER_RENGLON 30
-#define SEGUNDO_RENGLON 45
-#define TERCER_RENGLON 60
-
-#define MSJ_PUNTAJE_ALCANZADO "Puntaje alcanzado: "
 
 
 typedef struct{

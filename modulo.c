@@ -24,26 +24,10 @@ bool graficador_inicializar(const char *fn){
 		}
 	}	
 	fclose(fp);
-	printf("sale de inicializador\n");
 
 	return true;
 }
 
-void graficador_ajustar_variables(float *x, float *y){
-	if(*x<0){
-		*x = -*x;
-	}
-	if(*y<0){
-		*y = -*y;
-	}
-	
-	while(*x > 10.0){
-		*x = ((*x) * 0.1);
-	}
-	while(*y > 10.0){
-		*y = (*y / 10.0);
-	}
-}
 
 bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float x, float y, float angulo){
 
@@ -60,9 +44,6 @@ bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float 
 	if (objeto==NULL)
 		return false;
 	rotar(objeto, sprite[i].n, angulo);	
-
-	//trasladar(objeto, sprite[i].n, x, y-400); // esta no hace falta porque ya estas trasladando en x e y cuando lo graficas al sumarle las variables 
-
 	
 	for(j = 0; j < sprite[i].n -1 ; j++){//grafico la matriz rotada, desplazada en x e y; 
 		SDL_RenderDrawLine(
@@ -79,40 +60,10 @@ bool graficador_dibujar(SDL_Renderer *r,const char *nombre, float escala, float 
 	return true;
 }
 
-/*void graficador_finalizar() //no hace falta porque declare todo estatico 
+void graficador_finalizar() 
 {
-	for(int i=0; i<CANT_MODULOS; i++)
-		free(sprite[i]);
-}*/
-
-
-
-
-/*
-//Dibuja el sprite de nombre nombre en el renderer r escalado segun escala, rotado segun
-//angulo en la posicion x, y de la pantalla (tomando como (0; 0) la esquina inferior izquierda).
-bool graficador_dibujar(SDL_Renderer *r, const char *nombre, float escala, float x, float y, float angulo);
-{	
-	lista_iterador_t *iterador = lista_iterador_crear(l);
-	struct nodo *nodo_modulo = lista_iterador_actual(iterador);//me paro en el primer nodo
-	
-	if(nodo_modulo->dato.nombre != nombre)//mientras que no encuentre una coincidencia, avanzo
-	{
-		if((lista_iterador_siguiente(iterador))==false)//avanzo al siguiente nodo
-			break;
-		nodo_modulo = lista_iterador_actual(iterador);
-	}
-		for(int i = 0; i < nodo_modulo->dato.n - 1; i++)
-			SDL_RenderDrawLine(
-				renderer,
-				nodo_modulo->dato.cords[i][0] * escala + x / 2,//dato tiene la fila del nodo actual
-				-nodo_modulo->dato.cords[i][1] * escala + y / 2,
-				nodo_modulo->dato.cords[i+1][0] * escala + x / 2,//dato.cords[i][0] tiene todas las x se la mtriz
-				-nodo_modulo->dato.cords[i+1][1] * escala + y / 2
-			);
-	//lista_destruir(l, free());
-	lista_iterador_destruir(iterador);
-	return true;
+	for(int i=0; i<MAX_SPRITES; i++)
+		free(sprite[i].cords);
 }
 
-*/
+

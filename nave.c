@@ -6,7 +6,7 @@ nave_t nave_crear()
 
 	nave.sp_nave= &sprite[0];
 	nave.sp_chorro= sprite[1];
-	nave.vida=1;
+	nave.vida=NAVE_VIDAS_INICIALES;
 	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
 	nave.posicion_x=NAVE_X_INICIAL;
 	nave.posicion_y=NAVE_Y_INICIAL;

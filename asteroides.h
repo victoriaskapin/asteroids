@@ -35,7 +35,7 @@ bool dibujar_lista_asteroides(lista_t*l_rock,SDL_Renderer *r);
 
 float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y);
 bool asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide);
-void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot );
+void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot,int *score);
 
 /*asteroide_t asteroide;
 disparo_t disparo;

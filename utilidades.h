@@ -9,6 +9,8 @@
 #include <math.h>
 
 #include "config.h"
+#include "caracteres.h"
+#include "graficar.h"
 #include "modulo.h"
 #include "lista.h"
 #include "iterador.h"
@@ -19,12 +21,13 @@ float **crear_vector(size_t filas, size_t columnas);
 
 void destruir_vector(float **v,size_t n);
 
-float ** vector_rotar(float coordenadas[][2], size_t n, float rad);
-
 float **matriz_a_vector(float (*m)[MAX_COORDENADAS], size_t n);
 
 void rotar(float **coordenadas, int n, double rad);
 
 double computar_posicion(double pi, double vi, double dt);
 
+int bestscore(int best_score,int score);
+
 #endif
+
