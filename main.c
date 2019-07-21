@@ -4,8 +4,6 @@
 #include "disparos.h"
 #include "asteroides.h"
 
-//void setear_conficiones_iniciales(nave_t *nave);
-
 int main() {
 	SDL_Init(SDL_INIT_VIDEO);
 	
@@ -19,23 +17,23 @@ int main() {
 	int dormir = 0;
 
 	// BEGIN código del alumno
-	//status_t st;
+	
 	srand(time(NULL));
 	graficador_inicializar("sprites.bin");
 
-	float tiempo = 0.0;
+	int flag = 0;
 	int score = 0;
 	int best_score = 0;
 	int cantidad_asteroides = CANT_INICIAL_ASTEROIDES;
-	int vida_nave = NAVE_VIDAS_INICIALES;
+	int vidas_nave = NAVE_VIDAS_INICIALES;
 
-	//setear_conficiones_iniciales(&nave);
 	nave_t nave = nave_crear();
-	lista_t *l_shot = lista_crear();//creo la lista a llenar de disparos
+	lista_t *l_shot = lista_crear();
 	lista_t *l_rock = lista_crear();
 	
 	if(crear_asteroides_iniciales(cantidad_asteroides, l_rock));
 	//funcion que se llama cuando hay que crear asteroides de 0
+	
 	// END código del alumno
 
 	unsigned int ticks = SDL_GetTicks();
@@ -49,10 +47,12 @@ int main() {
 				{
 					case SDLK_UP:
 						if(nave.potencia < NAVE_POTENCIA_PASO)
-							nave.potencia += NAVE_POTENCIA_PASO;//aumento potencia
+							nave.potencia += NAVE_POTENCIA_PASO;
 						break;
 
 					case SDLK_SPACE:
+						if (!flag)
+							flag=1;
 						if(cargar_disparos(
 							l_shot,nave.posicion_x,
 							nave.posicion_y,
@@ -77,36 +77,39 @@ int main() {
 
 
 		// BEGIN código del alumno
-		tiempo+=DT;
 		
-		lista_asteroide_choco(l_rock,&nave,l_shot,&score);
+		if(flag){
 
-		nave_mover(&nave, DT, nave.potencia);
-		mover_lista_disparos(l_shot,DT);
-		mover_lista_asteroides(l_rock,DT);
+			lista_asteroide_choco(l_rock,&nave,l_shot,&score);
 
-		datos_en_pantalla(renderer,score,best_score,vida_nave);
+			nave_mover(&nave, DT, nave.potencia);
+			mover_lista_disparos(l_shot,DT);
+			mover_lista_asteroides(l_rock,DT);
+
+			datos_en_pantalla(renderer,score,best_score,vidas_nave);
 
 
-		if(!nave.vida){
-			dormir=1000;
-			vida_nave-=1;
-			nave=nave_crear();
-			nave.vida=vida_nave;
+			if(!nave.vida){
+				if(!revivir_nave(l_rock,&nave,&vidas_nave))
+					dormir = 1000;
+				else 
+					dormir = DT;
 
-			if(!vida_nave){//caso que no queden mas vidas
-				best_score=bestscore(best_score,score);
-				dormir = 3000;
-				mensajes_finde_partida(renderer,score);
-				vida_nave=NAVE_VIDAS_INICIALES;
-				score=0;
+				if(!vidas_nave){//caso que no queden mas vidas
+					best_score = bestscore(best_score,score);
+					dormir = 3000;
+					mensajes_finde_partida(renderer,score);
+					vidas_nave = NAVE_VIDAS_INICIALES;
+					nave.vida=vidas_nave;
+					score = 0;
+					flag = 0;
+				}
 			}
 		}
-
 	
 		//verifico si quedan asteroides 
 		if(lista_es_vacia(l_rock)){
-			cantidad_asteroides+=2;
+			cantidad_asteroides+=CANT_EXTRA_ASTEROIDES;
 			if(crear_asteroides_iniciales(cantidad_asteroides, l_rock));
 		}
 
@@ -134,6 +137,8 @@ int main() {
 	}
 
 	// BEGIN código del alumno
+	lista_destruir(l_rock,asteroide_destruir);
+	lista_destruir(l_shot,disparo_destruir);
 	graficador_finalizar();
 	// END código del alumno
 

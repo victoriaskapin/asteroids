@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CARACTER_ANCHO 2
+#define CARACTER_ANCHO 5.5
 #define CARACTER_ALTO 2
 #define CANT_CARACTERES 41
 

@@ -5,7 +5,6 @@
 #define Y_GAMEOVER 200
 #define X_GAMEOVER 270
 
-//funcion que gratica el vector a 2 ints que recibe, en una posicion que recibe como "desplazamiento" y "posicion_y"
 void dibujar_letra (const int (*vect_dir)[2],int n_dic,SDL_Renderer *renderer,float desplazamiento,float posicion_y,float escala){
 	int i;
 
@@ -28,13 +27,11 @@ void dibujar_string(char string[MAX_STRING],const caracteres_t dicc[CANT_CARACTE
 	for( i=0;i<n_string;i++){
 
 		for( j=0;string[i]!=dicc[j].caracter;j++){
-
 		}
 
 		dibujar_letra(dicc[j].vect_dir,dicc[j].longitud,renderer,desplazamiento,posicion_y,escala);
 
-		desplazamiento+=escala*5.5;//caracter ancho. 
-
+		desplazamiento+=escala*CARACTER_ANCHO; 
 	}
 
 }
@@ -46,7 +43,7 @@ void datos_en_pantalla(SDL_Renderer *renderer,int score,int best_score, int vida
 	char string[MAX_STRING] ;
 	float desplazamiento;
 	float posicion_y;
-	float escala=CARACTER_ANCHO;
+	float escala;
 	int i;
 	
 	posicion_y=30;//renglon 1
@@ -77,8 +74,6 @@ void datos_en_pantalla(SDL_Renderer *renderer,int score,int best_score, int vida
 
 }
 
-//funcion que recibe las posiciones en x e y, el angulo, la direccion de memoria del combustible y el score.
-// acorde al angulo y velocidades imprime por pantalla una leyenda y/o modifica los valores de combustible y score
 void mensajes_finde_partida(SDL_Renderer *renderer,int score){
 
 	size_t n_string;

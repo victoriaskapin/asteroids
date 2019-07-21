@@ -49,8 +49,8 @@ bool asteroide_dibujar(asteroide_t *rock,SDL_Renderer *r){
 				rock->angulo_rotacion);
 }
 
-void asteroide_destruir(asteroide_t *asteroide){
-	free(asteroide);
+void asteroide_destruir(void *asteroide){
+	free((asteroide_t *)asteroide);
 }
 
 bool cargar_asteroides_lista(lista_t *l_rock, float px, float py,size_t radio){
@@ -97,14 +97,11 @@ bool dibujar_lista_asteroides(lista_t*l_rock,SDL_Renderer *r){
 }
 
 float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y)
-{
-	asteroide_t *asteroid;
-	asteroid = asteroide; 
-	float dx = (float)asteroid->posicion_x - objeto_x;
-	float dy = (float)asteroid->posicion_y - objeto_y;
+{ 
+	float dx = asteroide->posicion_x - objeto_x;
+	float dy = asteroide->posicion_y - objeto_y;
 
-	float modulo_cuadrado = dx*dx + dy*dy;
-	return sqrt(modulo_cuadrado);
+	return sqrt((dx*dx + dy*dy));
 }//DEVUELVE LA DISTANCIA AL CENTRO DEL ASTEROIDE;
 
 bool asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
@@ -172,4 +169,20 @@ void lista_asteroide_choco(lista_t *l_rock,nave_t *nave,lista_t *l_shot,int *sco
 		}
 		aux=aux->sig;
 	}
+}
+
+bool revivir_nave(lista_t *l_rock,nave_t* nave,int *vidas_nave){
+	struct nodo *aux;
+	aux= l_rock->prim;
+	while(aux!=NULL){
+		if(distancia(((asteroide_t*)aux->dato),NAVE_X_INICIAL,NAVE_Y_INICIAL) <=((asteroide_t*)aux->dato)->radio)
+			return false;
+
+		aux=aux->sig;
+	}
+
+	*nave=nave_crear();
+	*vidas_nave -= 1;
+	nave->vida = *vidas_nave;
+	return true;
 }

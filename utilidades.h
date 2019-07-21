@@ -13,7 +13,6 @@
 #include "graficar.h"
 #include "modulo.h"
 #include "lista.h"
-#include "iterador.h"
 
 float generar_aleatorio(float superior, float inferior);
 

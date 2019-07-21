@@ -7,8 +7,8 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 		return NULL;
 
 	shot->sp_disparo=sprite[6];	
-	shot->posicion_x=px;//+cos(angulo);
-	shot->posicion_y=py;//+sin(angulo);
+	shot->posicion_x=px;
+	shot->posicion_y=py;
 	shot->angulo=angulo;
 	shot->velocidad=VELOCIDAD_DISPARO;
 	shot->tiempo_vida= TIEMPO_VIDA_SHOT;
@@ -17,8 +17,8 @@ disparo_t * disparo_crear(float px, float py, float angulo){
 	return shot;
 }
 
-void disparo_destruir(disparo_t *shot){
-	free(shot);
+void disparo_destruir(void *shot){
+	free((disparo_t*)shot);
 } 
 
 bool disparo_dibujar(disparo_t *shot,SDL_Renderer *r){
@@ -41,8 +41,8 @@ void disparo_mover(disparo_t *shot, float dt){
 }
 
 bool cargar_disparos(lista_t *l_shot,float px,float py,float angulo){
-	disparo_t * shot = disparo_crear(px,py,angulo);//creo un disparo nuevo.
-	return (lista_insertar_comienzo(l_shot,shot));//cargo en el comienzo de la lista de disparos el nuevo disparo
+	disparo_t * shot = disparo_crear(px,py,angulo);
+	return (lista_insertar_comienzo(l_shot,shot));
 }
 
 void mover_lista_disparos(lista_t*l_shot,float dt){
@@ -69,6 +69,5 @@ bool dibujar_lista_disparos(lista_t*l_shot,SDL_Renderer *r){
 		if(disparo_dibujar(((disparo_t*)aux->dato),r));
 		aux=aux->sig;
 	}
-
 	return true;
 }

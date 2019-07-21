@@ -7,7 +7,7 @@ nave_t nave_crear()
 	nave.sp_nave= &sprite[0];
 	nave.sp_chorro= sprite[1];
 	nave.vida=NAVE_VIDAS_INICIALES;
-	nave.escala=ESCALA_NAVE;//le agregue la escala al tda xq despues hay que pasarsela al graficador
+	nave.escala=ESCALA_NAVE;
 	nave.posicion_x=NAVE_X_INICIAL;
 	nave.posicion_y=NAVE_Y_INICIAL;
 	nave.velocidad_x=NAVE_VX_INICIAL;
@@ -47,9 +47,6 @@ void nave_mover(nave_t *nave, float dt, size_t potencia)
 	if(nave->posicion_y > VENTANA_ALTO)
 		nave->posicion_y = 0;
 
-
-	//lista_mapear(l, rotar(nave, nave->angulo_rotacion)/*void *(*f)(void *dato)*/);//ESTO FALTA PULIRLO
-
 }
 
 bool nave_dibujar(nave_t *nave, SDL_Renderer *r)
@@ -68,28 +65,3 @@ double computar_velocidad(double vi, double aceleracion, double dt)
 {
 	return dt*aceleracion+vi;
 }
-
-
-size_t potencia_nave(nave_t nave, size_t paso_potencia)
-{
-	int potencia_temp=0;
-
-	if((potencia_temp = nave.potencia + paso_potencia)>1000)//la potencia nunca sera mas de 1000
-		return paso_potencia;
-
-	return potencia_temp;
-}
-
-
-void trasladar(float **coordenadas, int n, float dx, float dy)
-{
-	for(int i=0; i<n; i++)
-	{
-		coordenadas[i][0] += dx;
-		coordenadas[i][1] += dy;
-	}
-
-}
-
-
-

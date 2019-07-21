@@ -3,7 +3,7 @@
 
 float generar_aleatorio(float superior, float inferior)
 {
-	return ((superior-inferior) * ((float)rand()/(float)RAND_MAX) + inferior );/*x entre x_max y x_min*/
+	return ((superior-inferior) * ((float)rand()/(float)RAND_MAX) + inferior );
 }
 
 float **crear_vector(size_t filas, size_t columnas)
@@ -14,12 +14,11 @@ float **crear_vector(size_t filas, size_t columnas)
 	if((vector = malloc(filas*sizeof(float*)))==NULL)
 		return NULL;
 	for(i=0; i<filas; i++)
-	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) /*pido memoria para todas las columnas*/
+	    if((vector[i] = malloc(columnas*sizeof(float)))==NULL) 
 		{
 			destruir_vector(vector, filas);
 	    	return NULL;
 		}
-
 	return vector;
 }
 
@@ -29,7 +28,6 @@ void destruir_vector(float **v,size_t n){
 
 		free (v[i]);
 	}
-
 	free (v);
 }
 
@@ -54,7 +52,6 @@ double computar_posicion(double pi, double vi, double dt)
 	return dt*vi+pi;
 }
 
-//esta es igual a la de rotar anterior solo que devuelve void, la puse aca para no borrarla pero la estamos usando ??? 
 void rotar(float **coordenadas, int n, double rad)
 {
 	int i;
@@ -68,10 +65,8 @@ void rotar(float **coordenadas, int n, double rad)
 		y_rotada = (coordenadas[i][0])*seno_rad + (coordenadas[i][1])*coseno_rad;
 		
 		coordenadas[i][0] = x_rotada;
-		coordenadas[i][1] = y_rotada;
-		
+		coordenadas[i][1] = y_rotada;	
 	}
-
 }
 
 
