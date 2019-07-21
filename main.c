@@ -4,7 +4,7 @@
 #include "disparos.h"
 #include "asteroides.h"
 
-int main() {
+int main(void) {
 	SDL_Init(SDL_INIT_VIDEO);
 	
 	SDL_Window *window;
@@ -153,11 +153,3 @@ int main() {
 	SDL_Quit();
 	return 0;
 }
-
-
-/*void setear_conficiones_iniciales(nave_t *nave)
-{
-	printf("condiciones iniciales\n");
-	nave_t nave_aux ={500, 400, 0, 0, NAVE_ANGULO_INICIAL, 0};
-	*nave=nave_aux;
-}*/
