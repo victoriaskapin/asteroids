@@ -27,11 +27,14 @@ int main(void) {
 	int cantidad_asteroides = CANT_INICIAL_ASTEROIDES;
 	int vidas_nave = NAVE_VIDAS_INICIALES;
 
-	nave_t nave = nave_crear();
+	
 	lista_t *l_shot = lista_crear();
 	lista_t *l_rock = lista_crear();
+	nave_t nave = nave_crear();
 	
 	if(crear_asteroides_iniciales(cantidad_asteroides, l_rock));
+	
+	//nave_t nave = nave_crear();
 	//funcion que se llama cuando hay que crear asteroides de 0
 
 	// END código del alumno
@@ -92,9 +95,9 @@ int main(void) {
 
 
 			if(!nave.vida){
-				if(!revivir_nave(l_rock,&nave,&vidas_nave))
+				if(revivir_nave(l_rock,&nave,&vidas_nave))
 					dormir = 1000;
-				else 
+				else
 					dormir = DT;
 
 				if(!vidas_nave){//caso que no queden mas vidas
@@ -125,6 +128,7 @@ int main(void) {
 		if(nave.vida)
 			if((nave_dibujar(&nave, renderer))==false)
 				break;
+		
 
 		
 		// END código del alumno

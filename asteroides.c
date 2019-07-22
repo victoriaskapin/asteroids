@@ -6,7 +6,7 @@ asteroide_t * asteroide_crear(size_t radio, float px, float py){
 	asteroide = malloc(sizeof(asteroide_t));
 	if (asteroide==NULL)
 		return NULL;
-	int asteroide_aleatorio= generar_aleatorio(5,3);
+	int asteroide_aleatorio= generar_aleatorio(6,2);
 
 	asteroide->sp_asteroide=&sprite[asteroide_aleatorio];
 	
@@ -107,7 +107,7 @@ float distancia(asteroide_t *asteroide, float objeto_x, float objeto_y)
 bool asteroide_choco(nave_t *nave,lista_t *l_shot, asteroide_t *asteroide){
 	//CHEQUEO CON LA NAVE
 	if(distancia(asteroide,nave->posicion_x,nave->posicion_y) <=asteroide->radio)
-		nave->vida=0;
+		nave->vida=0;//destruyo la nave.
 
 	struct nodo *aux;
 	aux= l_shot->prim;

@@ -7,7 +7,7 @@ typedef struct
 {
 	sprite_t *sp_nave;
 	sprite_t sp_chorro;
-	size_t vida;
+	size_t vida;//utilizo esta variable como bool para verificar si choca contra un asteroide.
 	float escala;
 	float posicion_x;
 	float posicion_y;

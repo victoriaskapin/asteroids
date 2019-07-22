@@ -64,7 +64,6 @@ void lista_estructura_borrar(lista_t *l, void *estructura){
    {
       struct nodo *aux = l->prim->sig;
       free(l->prim->dato);
-      //free(l->prim);
       l->prim = aux;
       if(l->prim==NULL)
       	break;
@@ -83,7 +82,6 @@ void lista_estructura_borrar(lista_t *l, void *estructura){
       {
          ant->sig = actual->sig;
          free(actual->dato);
-         //free(actual);
       }
       else
           ant = actual;

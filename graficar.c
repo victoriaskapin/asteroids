@@ -106,7 +106,7 @@ void mensaje_iniciode_partida(SDL_Renderer *renderer){
 	size_t n_string;
 	char string [MAX_STRING];
 	float desplazamiento=X_GAMEOVER;
-	float posicion_y=Y_GAMEOVER;
+	float posicion_y=650;
 	float escala = 4;
 
 	n_string = (sprintf(string,"%s","press space to start"));
